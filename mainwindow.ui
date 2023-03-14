@@ -261,7 +261,7 @@ border-bottom:1px solid #422c30;
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QTabWidget" name="Tab3">
+    <widget class="QTabWidget" name="afficher">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -291,7 +291,7 @@ QTabWidget::tab-bar {
 }</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -392,7 +392,7 @@ border-radius:15px;
           <string>   Adresse_liv</string>
          </property>
         </widget>
-        <widget class="QLineEdit" name="phone">
+        <widget class="QLineEdit" name="telephone">
          <property name="geometry">
           <rect>
            <x>400</x>
@@ -497,7 +497,7 @@ border-radius:15px;
         <property name="geometry">
          <rect>
           <x>-70</x>
-          <y>0</y>
+          <y>-20</y>
           <width>1141</width>
           <height>531</height>
          </rect>
@@ -549,10 +549,27 @@ QPushButton::hover {
          <string>ajouter</string>
         </property>
        </widget>
+       <widget class="QLineEdit" name="le_id">
+        <property name="geometry">
+         <rect>
+          <x>580</x>
+          <y>240</y>
+          <width>161</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>ID_LIVRAISON</string>
+        </property>
+       </widget>
        <zorder>label_4</zorder>
        <zorder>groupBox</zorder>
        <zorder>calendarWidget</zorder>
        <zorder>ajouter</zorder>
+       <zorder>le_id</zorder>
       </widget>
      </widget>
      <widget class="QWidget" name="tab_4">
@@ -623,27 +640,11 @@ QPushButton::hover {
       <attribute name="title">
        <string>Affichage</string>
       </attribute>
-      <widget class="QLabel" name="label_5">
-       <property name="geometry">
-        <rect>
-         <x>70</x>
-         <y>10</y>
-         <width>771</width>
-         <height>461</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap>../../instagram/ERTTED.PNG</pixmap>
-       </property>
-      </widget>
       <widget class="QPushButton" name="Recherche">
        <property name="geometry">
         <rect>
-         <x>880</x>
-         <y>30</y>
+         <x>870</x>
+         <y>-10</y>
          <width>191</width>
          <height>61</height>
         </rect>
@@ -673,8 +674,8 @@ QPushButton::hover {
       <widget class="QPushButton" name="Supprimer">
        <property name="geometry">
         <rect>
-         <x>880</x>
-         <y>110</y>
+         <x>870</x>
+         <y>60</y>
          <width>191</width>
          <height>61</height>
         </rect>
@@ -705,7 +706,7 @@ QPushButton::hover {
        <property name="geometry">
         <rect>
          <x>860</x>
-         <y>200</y>
+         <y>330</y>
          <width>231</width>
          <height>61</height>
         </rect>
@@ -730,6 +731,48 @@ QPushButton::hover {
        </property>
        <property name="text">
         <string>trie en fonction du date</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="id">
+       <property name="geometry">
+        <rect>
+         <x>880</x>
+         <y>260</y>
+         <width>161</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QTableView" name="tab_liv">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>30</y>
+         <width>801</width>
+         <height>491</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="ID_LIVRAISON">
+       <property name="geometry">
+        <rect>
+         <x>880</x>
+         <y>140</y>
+         <width>181</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>Passez un identifiant </string>
        </property>
       </widget>
      </widget>
@@ -763,7 +806,7 @@ QPushButton::hover {
         <enum>Qt::Horizontal</enum>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_5">
+      <widget class="QLineEdit" name="le_cin">
        <property name="geometry">
         <rect>
          <x>330</x>
@@ -785,7 +828,7 @@ QPushButton::hover {
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_6">
+      <widget class="QLineEdit" name="le_nom">
        <property name="geometry">
         <rect>
          <x>330</x>
@@ -807,7 +850,7 @@ QPushButton::hover {
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_7">
+      <widget class="QLineEdit" name="le_telephone">
        <property name="geometry">
         <rect>
          <x>330</x>
@@ -829,7 +872,7 @@ QPushButton::hover {
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_8">
+      <widget class="QLineEdit" name="le_adresse">
        <property name="geometry">
         <rect>
          <x>330</x>
@@ -875,16 +918,6 @@ QPushButton::hover {
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-      <widget class="QComboBox" name="comboBox_2">
-       <property name="geometry">
-        <rect>
-         <x>320</x>
-         <y>470</y>
-         <width>101</width>
-         <height>31</height>
-        </rect>
        </property>
       </widget>
       <widget class="QLabel" name="label_7">
@@ -946,7 +979,7 @@ QPushButton::hover {
         <pixmap>C:/Users/wiki/Downloads/GHYT.png</pixmap>
        </property>
       </widget>
-      <widget class="QFrame" name="frame_2">
+      <widget class="QFrame" name="cin">
        <property name="geometry">
         <rect>
          <x>150</x>
@@ -961,7 +994,7 @@ QPushButton::hover {
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <widget class="QLabel" name="label_12">
+       <widget class="QLabel" name="cin_liv_2">
         <property name="geometry">
          <rect>
           <x>40</x>
@@ -975,7 +1008,7 @@ QPushButton::hover {
 font: 12pt &quot;Times New Roman&quot;;</string>
         </property>
         <property name="text">
-         <string>CIN</string>
+         <string>cin</string>
         </property>
        </widget>
       </widget>
@@ -1141,11 +1174,11 @@ font: 12pt &quot;Times New Roman&quot;;</string>
 font: 12pt &quot;Times New Roman&quot;;</string>
         </property>
         <property name="text">
-         <string>adresse</string>
+         <string>Prenom</string>
         </property>
        </widget>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_10">
+      <widget class="QLineEdit" name="le_prenom">
        <property name="geometry">
         <rect>
          <x>330</x>
@@ -1198,25 +1231,78 @@ QPushButton::hover {
         <string>Modifier</string>
        </property>
       </widget>
+      <widget class="QLineEdit" name="ID_LIVRAISON_2">
+       <property name="geometry">
+        <rect>
+         <x>560</x>
+         <y>120</y>
+         <width>161</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>ID_LIVRAISON</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>560</x>
+         <y>90</y>
+         <width>111</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>    Identifiant</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="le_objet">
+       <property name="geometry">
+        <rect>
+         <x>330</x>
+         <y>480</y>
+         <width>181</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="maxLength">
+        <number>32753</number>
+       </property>
+       <property name="echoMode">
+        <enum>QLineEdit::Normal</enum>
+       </property>
+       <property name="dragEnabled">
+        <bool>false</bool>
+       </property>
+      </widget>
       <zorder>label_7</zorder>
       <zorder>line</zorder>
-      <zorder>lineEdit_5</zorder>
-      <zorder>lineEdit_6</zorder>
-      <zorder>lineEdit_7</zorder>
-      <zorder>lineEdit_8</zorder>
+      <zorder>le_cin</zorder>
+      <zorder>le_nom</zorder>
+      <zorder>le_telephone</zorder>
+      <zorder>le_adresse</zorder>
       <zorder>line_4</zorder>
-      <zorder>comboBox_2</zorder>
       <zorder>label_11</zorder>
       <zorder>line_2</zorder>
       <zorder>line_3</zorder>
-      <zorder>frame_2</zorder>
+      <zorder>cin</zorder>
       <zorder>frame_5</zorder>
       <zorder>frame_6</zorder>
       <zorder>frame_7</zorder>
       <zorder>frame_8</zorder>
       <zorder>frame_9</zorder>
-      <zorder>lineEdit_10</zorder>
+      <zorder>le_prenom</zorder>
       <zorder>Modifier</zorder>
+      <zorder>ID_LIVRAISON_2</zorder>
+      <zorder>label_3</zorder>
+      <zorder>le_objet</zorder>
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">

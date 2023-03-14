@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include "gestionlivraison.h"
 #include <QMainWindow>
 
 //QT_BEGIN_NAMESPACE
@@ -19,16 +19,13 @@ public:
 private slots:
     void on_ajouter_clicked();
 
-
-
-    /*void on_Supprimer_clicked();*/
-
-   /* void on_Modifier_clicked();*/
-
     void on_Supprimer_clicked();
+
+    void on_Modifier_clicked();
 
 private:
     Ui::MainWindow *ui;
-  /* Gestionlivraison Etmp;*/
+    Gestionlivraison l;
+ //Gestionlivraison Etmp;
 };
 #endif // MAINWINDOW_H

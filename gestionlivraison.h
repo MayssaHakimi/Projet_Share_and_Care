@@ -9,22 +9,23 @@ class Gestionlivraison
 {
 public:
 
-    int cin_liv;
+    QString cin_liv;
     QString nom_liv;
     QString prenom_liv;
     QString Date_liv;
     QString Adresse_liv;
    QString Objet;
-    int telephone;
+    QString telephone;
     Gestionlivraison();
-    Gestionlivraison (QString , QString , QString, QString, QString , int, int   );
-    int getID_livraison();
-    void setID_livraison (int);
+    Gestionlivraison (int ,QString , QString , QString, QString, QString , QString, QString   );
+    int getID_LIVRAISON();
+    void setID_LIVRAISON (int);
     bool ajouter();
-    QSqlQueryModel *afficher();
     bool supprimer(int);
+    bool modifier(int);
+    QSqlQueryModel* afficher();
 private:
-     int ID_livraison;
+     int ID_LIVRAISON;
 };
 
 #endif // GESTIONLIVRAISON_H
