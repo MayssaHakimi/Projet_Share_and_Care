@@ -13,16 +13,16 @@ class Adherent
     int id_adh ;
     QString nom_adh ;
     QString prenom_adh ;
-    QString cin_adh ;
+  QString cin_adh ;
     QString identifiant ;
     QString mdp_adh;
-    QString img ;
+
     QString date_emb;
     QString fct_adh ;
 
 public:
     Adherent() {};
-    Adherent(QString,QString,QString,QString,QString,QString,QString ,QString);
+    Adherent(int,QString,QString,QString,QString,QString,QString,QString);
 int getId_adh(){return id_adh ;}
     QString getNom_adh(){return nom_adh;}
     QString getPrenom_adh(){return prenom_adh;}
@@ -30,7 +30,7 @@ int getId_adh(){return id_adh ;}
     QString getIdentifiant(){return identifiant;}
     QString getMdp_adh(){return mdp_adh;}
     QString getFct_adh(){return fct_adh;}
-    QString getImg(){return img;}
+
     QString getDate_emb(){return date_emb;}
     void setId_adh(int id) {id_adh = id ;}
 
@@ -45,7 +45,7 @@ int getId_adh(){return id_adh ;}
 
     void setFct_adh(QString f) {fct_adh = f ;}
 
-    void setImg(QString im) {img = im ;}
+
 
     void setDate_emb(QString d) {date_emb= d ;}
 
@@ -56,7 +56,11 @@ bool modifier_adh(int);
 QSqlQueryModel * tri_adh_asc();
 QSqlQueryModel * tri_adh_desc();
 QSqlQueryModel * recherche_adh(QString);
-
+int RH();
+int RRB();
+int DCF();
+int RL();
+int RE();
 };
 
 #endif // ADHERENT_H
