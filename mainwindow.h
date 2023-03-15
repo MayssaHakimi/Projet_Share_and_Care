@@ -30,6 +30,12 @@ private slots:
 
     void on_pushButton_7_clicked();
 
+    void statistique_don();
+
+
+
+
+
 private:
     Ui::MainWindow *ui;
     Don Do;

@@ -15,23 +15,21 @@ this->quantite=quantite;
 
 bool Don::ajouter_don()
 {
-    QSqlQuery query;
+       QSqlQuery query;
        QString res =QString::number(id_don);
        QString res1 =QString::number(quantite);
-       query.prepare("Alter table dons modify id_don  NOT UNIQUE ");
-
-
        query.prepare("insert into DONS (id_don, nom_don , prenom_don, cin_don, taille, date_v, quantite , type_don )" "values(:id_don, :nom_don , :prenom_don, :cin_don, :taille, :date_v, :quantite , :type_don)");
 
 
-   query.bindValue(":id_don",res);
-   query.bindValue(":quantite",res1);
+     query.bindValue(":id_don",res);
+     query.bindValue(":quantite",res1);
      query.bindValue(":nom_don",nom_don);
-      query.bindValue(":prenom_don",prenom_don);
+     query.bindValue(":prenom_don",prenom_don);
      query.bindValue(":cin_don",cin_don);
      query.bindValue(":taille",taille);
      query.bindValue(":date_v",date_v);
      query.bindValue(":type_don",type_don);
+
 
      return query.exec();
 
@@ -89,14 +87,7 @@ QSqlQueryModel * Don::trieAsc()
  {
     QSqlQueryModel * model=new QSqlQueryModel();
     model->setQuery("select id_don , nom_don , prenom_don, cin_don , type_don ,taille , date_v , quantite from DONS order by nom_don ASC");
-    model->setHeaderData(0,Qt::Horizontal,QObject::tr("Id du don"));
-    model->setHeaderData(1,Qt::Horizontal,QObject::tr("Nom du donateur"));
-    model->setHeaderData(2,Qt::Horizontal,QObject::tr("Prénom du donateur"));
-    model->setHeaderData(3,Qt::Horizontal,QObject::tr("Cin du donateur"));
-    model->setHeaderData(4,Qt::Horizontal,QObject::tr("Type de don"));
-    model->setHeaderData(5,Qt::Horizontal,QObject::tr("Taille"));
-    model->setHeaderData(6,Qt::Horizontal,QObject::tr("Date de validitée"));
-    model->setHeaderData(7,Qt::Horizontal,QObject::tr("Quantité"));
+    afficher_don();
 
     return model;
  }
@@ -105,15 +96,7 @@ QSqlQueryModel * Don::trieDesc()
  {
     QSqlQueryModel * model=new QSqlQueryModel();
     model->setQuery("select id_don , nom_don , prenom_don, cin_don , type_don ,taille , date_v , quantite from DONS order by nom_don DESC");
-    model->setHeaderData(0,Qt::Horizontal,QObject::tr("Id du don"));
-    model->setHeaderData(1,Qt::Horizontal,QObject::tr("Nom du donateur"));
-    model->setHeaderData(2,Qt::Horizontal,QObject::tr("Prénom du donateur"));
-    model->setHeaderData(3,Qt::Horizontal,QObject::tr("Cin du donateur"));
-    model->setHeaderData(4,Qt::Horizontal,QObject::tr("Type de don"));
-    model->setHeaderData(5,Qt::Horizontal,QObject::tr("Taille"));
-    model->setHeaderData(6,Qt::Horizontal,QObject::tr("Date de validitée"));
-    model->setHeaderData(7,Qt::Horizontal,QObject::tr("Quantité"));
-
+   afficher_don();
     return model;
  }
 
@@ -121,18 +104,66 @@ QSqlQueryModel * Don::recherche_don( QString type_don )
  {
      QSqlQuery query;
     QSqlQueryModel * model=new QSqlQueryModel();
-    model->setQuery("select id_don , nom_don , prenom_don, cin_don , type_don ,taille , date_v , quantite from DONS where type_don = :type_don ;");
-    query.bindValue(":type_don",type_don);
-    model->setHeaderData(0,Qt::Horizontal,QObject::tr("Id du don"));
-    model->setHeaderData(1,Qt::Horizontal,QObject::tr("Nom du donateur"));
-    model->setHeaderData(2,Qt::Horizontal,QObject::tr("Prénom du donateur"));
-    model->setHeaderData(3,Qt::Horizontal,QObject::tr("Cin du donateur"));
-    model->setHeaderData(4,Qt::Horizontal,QObject::tr("Type de don"));
-    model->setHeaderData(5,Qt::Horizontal,QObject::tr("Taille"));
-    model->setHeaderData(6,Qt::Horizontal,QObject::tr("Date de validitée"));
-    model->setHeaderData(7,Qt::Horizontal,QObject::tr("Quantité"));
+
+    query.prepare("select id_don , nom_don , prenom_don, cin_don , type_don ,taille , date_v , quantite from DONS where type_don = :type_don ;");
+    query.bindValue(":type_don",type_don );
+
+    if(query.exec())
+    {
+        model->setQuery(query);
+   afficher_don();
+}
 
     return model;
+ }
+
+QSqlQueryModel * Don::recherche_don_nom( QString nom_don )
+ {
+     QSqlQuery query;
+    QSqlQueryModel * model=new QSqlQueryModel();
+
+    query.prepare("select id_don , nom_don , prenom_don, cin_don , type_don ,taille , date_v , quantite from DONS where nom_don = :nom_don ;");
+    query.bindValue(":nom_don",nom_don );
+
+    if(query.exec())
+    {
+        model->setQuery(query);
+   afficher_don();
+}
+
+    return model;
+ }
+
+int Don::vetement()
+ {
+
+   QSqlQuery query;
+       query.prepare("SELECT count(*)  FROM dons WHERE type_don = 'Vetement'");
+       query.exec();
+       query.next();
+       int count = query.value(0).toInt();
+       return count;
+ }
+
+int Don::nourriture()
+ {
+    QSqlQuery query;
+        query.prepare("SELECT count(*)  FROM dons WHERE type_don = 'Nourriture'");
+        query.exec();
+        query.next();
+        int count = query.value(0).toInt();
+        return count;
+ }
+int Don::vetement_nourriture( )
+ {
+    QSqlQuery query;
+        query.prepare("SELECT count(*)  FROM dons WHERE type_don = 'Vetement et Nourriture'");
+        query.exec();
+        query.next();
+        int count = query.value(0).toInt();
+        return count;
+
+
  }
 
 
