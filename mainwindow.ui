@@ -171,7 +171,7 @@ border-radius:10px
     <property name="geometry">
      <rect>
       <x>170</x>
-      <y>-40</y>
+      <y>0</y>
       <width>1101</width>
       <height>821</height>
      </rect>
@@ -209,7 +209,7 @@ border-bottom:1px solid #422c30;
     <widget class="QTabWidget" name="tabWidget">
      <property name="geometry">
       <rect>
-       <x>50</x>
+       <x>10</x>
        <y>50</y>
        <width>991</width>
        <height>651</height>
@@ -255,7 +255,7 @@ QTabWidget::tab-bar {
 </string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -264,15 +264,16 @@ QTabWidget::tab-bar {
       <widget class="QGroupBox" name="groupBox_3">
        <property name="geometry">
         <rect>
-         <x>30</x>
-         <y>80</y>
-         <width>921</width>
-         <height>201</height>
+         <x>170</x>
+         <y>230</y>
+         <width>691</width>
+         <height>181</height>
         </rect>
        </property>
        <property name="styleSheet">
         <string notr="true">*{border-radius:5px;
-background:transparent}</string>
+background:#ba7191t
+border-radius:30px;}</string>
        </property>
        <property name="title">
         <string/>
@@ -456,10 +457,10 @@ background:transparent}</string>
        <widget class="QLabel" name="label_45">
         <property name="geometry">
          <rect>
-          <x>380</x>
+          <x>370</x>
           <y>90</y>
-          <width>71</width>
-          <height>16</height>
+          <width>81</width>
+          <height>20</height>
          </rect>
         </property>
         <property name="text">
@@ -469,20 +470,20 @@ background:transparent}</string>
        <widget class="QPushButton" name="pushButton">
         <property name="geometry">
          <rect>
-          <x>660</x>
-          <y>20</y>
+          <x>480</x>
+          <y>130</y>
           <width>101</width>
           <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">#pushButton_3
+         <string notr="true">#pushButton
 {
 background:#422c30;
 color:white;
 border-radius:15px;
 }
-#pushButton_3:hover
+#pushButton:hover
 {
 background:brown;
 color:white;
@@ -491,60 +492,6 @@ border-radius:15px;
         </property>
         <property name="text">
          <string>ajouter</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_3">
-        <property name="geometry">
-         <rect>
-          <x>660</x>
-          <y>70</y>
-          <width>101</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">#pushButton_20
-{
-background:#422c30;
-color:white;
-border-radius:15px;
-}
-#pushButton_20:hover
-{
-background:brown;
-color:white;
-border-radius:15px;
-}</string>
-        </property>
-        <property name="text">
-         <string>modifier</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="geometry">
-         <rect>
-          <x>660</x>
-          <y>120</y>
-          <width>101</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">#pushButton_21
-{
-background:#422c30;
-color:white;
-border-radius:15px;
-}
-#pushButton_21:hover
-{
-background:brown;
-color:white;
-border-radius:15px;
-}</string>
-        </property>
-        <property name="text">
-         <string>supprimer</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_46">
@@ -612,106 +559,46 @@ border-radius:15px;
          <string/>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_ids">
-        <property name="geometry">
-         <rect>
-          <x>470</x>
-          <y>160</y>
-          <width>171</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_48">
-        <property name="geometry">
-         <rect>
-          <x>370</x>
-          <y>170</y>
-          <width>101</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Identifiant : </string>
-        </property>
-       </widget>
       </widget>
-      <widget class="QGroupBox" name="groupBox_7">
+      <widget class="QLabel" name="label_pic_5">
        <property name="geometry">
         <rect>
-         <x>650</x>
-         <y>290</y>
-         <width>321</width>
-         <height>61</height>
+         <x>-10</x>
+         <y>0</y>
+         <width>1021</width>
+         <height>611</height>
         </rect>
        </property>
-       <property name="styleSheet">
-        <string notr="true">*{border-radius:5px;
-   background:rgb(149, 110, 91)}</string>
+       <property name="minimumSize">
+        <size>
+         <width>131</width>
+         <height>91</height>
+        </size>
        </property>
-       <property name="title">
+       <property name="text">
         <string/>
        </property>
-       <widget class="QLabel" name="label_59">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>50</width>
-          <height>0</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_60">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>20</y>
-          <width>91</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Recherche :</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit_28">
-        <property name="geometry">
-         <rect>
-          <x>130</x>
-          <y>10</y>
-          <width>171</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
+       <property name="pixmap">
+        <pixmap>../5.png</pixmap>
+       </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_13">
+      <widget class="QPushButton" name="pushButton_3">
        <property name="geometry">
         <rect>
-         <x>360</x>
-         <y>530</y>
+         <x>670</x>
+         <y>430</y>
          <width>101</width>
          <height>41</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">#pushButton_13
+        <string notr="true">#pushButton_3
 {
-background:#ba7191;
+background:#422c30;
 color:white;
 border-radius:15px;
 }
-#pushButton_13:hover
+#pushButton_3:hover
 {
 background:brown;
 color:white;
@@ -719,14 +606,67 @@ border-radius:15px;
 }</string>
        </property>
        <property name="text">
-        <string>trier</string>
+        <string>modifier</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_14">
+      <widget class="QPushButton" name="pushButton_2">
        <property name="geometry">
         <rect>
-         <x>250</x>
-         <y>530</y>
+         <x>790</x>
+         <y>430</y>
+         <width>101</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#pushButton_2
+{
+background:#422c30;
+color:white;
+border-radius:15px;
+}
+#pushButton_2:hover
+{
+background:brown;
+color:white;
+border-radius:15px;
+}</string>
+       </property>
+       <property name="text">
+        <string>supprimer</string>
+       </property>
+      </widget>
+      <zorder>label_pic_5</zorder>
+      <zorder>groupBox_3</zorder>
+      <zorder>pushButton_3</zorder>
+      <zorder>pushButton_2</zorder>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Liste</string>
+      </attribute>
+      <widget class="QTableView" name="tab_aff">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>140</y>
+         <width>681</width>
+         <height>291</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">*{
+font-family:l;
+	font: 10pt &quot;Times New Roman&quot;;
+
+}</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_pdf">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>440</y>
          <width>101</width>
          <height>41</height>
         </rect>
@@ -749,7 +689,123 @@ border-radius:15px;
         <string>export pdf</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_pic_5">
+      <widget class="QPushButton" name="pushButton_tri">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>440</y>
+         <width>101</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#pushButton_13
+{
+background:#ba7191;
+color:white;
+border-radius:15px;
+}
+#pushButton_13:hover
+{
+background:brown;
+color:white;
+border-radius:15px;
+}</string>
+       </property>
+       <property name="text">
+        <string>trier</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_pic_6">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>-20</y>
+         <width>1021</width>
+         <height>611</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>131</width>
+         <height>91</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../4.png</pixmap>
+       </property>
+      </widget>
+      <widget class="QFrame" name="frame_3">
+       <property name="geometry">
+        <rect>
+         <x>590</x>
+         <y>70</y>
+         <width>371</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">* {background:rgb(118, 85, 69);
+border-radius:30px;}</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QPushButton" name="pushButton_rech">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>101</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#pushButton_t
+{
+background:#422c30;
+color:white;
+border-radius:15px;
+}
+#pushButton_t:hover
+{
+background:brown;
+color:white;
+border-radius:15px;
+}</string>
+        </property>
+        <property name="text">
+         <string>recherche :</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_search">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>10</y>
+          <width>231</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <zorder>label_pic_6</zorder>
+      <zorder>tab_aff</zorder>
+      <zorder>pushButton_pdf</zorder>
+      <zorder>pushButton_tri</zorder>
+      <zorder>frame_3</zorder>
+     </widget>
+     <widget class="QWidget" name="tab_4">
+      <attribute name="title">
+       <string>Historique</string>
+      </attribute>
+      <widget class="QLabel" name="label_pic_7">
        <property name="geometry">
         <rect>
          <x>-10</x>
@@ -768,29 +824,55 @@ border-radius:15px;
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap>../Supprimer.png</pixmap>
+        <pixmap>../Ajouter bénéficiaire.png</pixmap>
        </property>
       </widget>
-      <widget class="QTableView" name="tab_aff">
+      <widget class="QPlainTextEdit" name="plainTextEdit">
        <property name="geometry">
         <rect>
-         <x>260</x>
-         <y>370</y>
-         <width>691</width>
-         <height>141</height>
+         <x>150</x>
+         <y>170</y>
+         <width>651</width>
+         <height>281</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">*{background:rgb(118, 85, 69);
+border-radius:30px;
+color: white;}</string>
+       </property>
       </widget>
-      <zorder>label_pic_5</zorder>
-      <zorder>groupBox_3</zorder>
-      <zorder>groupBox_7</zorder>
-      <zorder>pushButton_13</zorder>
-      <zorder>pushButton_14</zorder>
-      <zorder>tab_aff</zorder>
+      <widget class="QPushButton" name="histbouton">
+       <property name="geometry">
+        <rect>
+         <x>420</x>
+         <y>470</y>
+         <width>101</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#pushButton_3
+{
+background:#422c30;
+color:white;
+border-radius:15px;
+}
+#pushButton_3:hover
+{
+background:brown;
+color:white;
+border-radius:15px;
+}</string>
+       </property>
+       <property name="text">
+        <string>historique</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
-       <string>info </string>
+       <string>Stats</string>
       </attribute>
       <widget class="QLabel" name="label_pic_8">
        <property name="geometry">
@@ -812,6 +894,60 @@ border-radius:15px;
        </property>
        <property name="pixmap">
         <pixmap>../Supprimer2.png</pixmap>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_5">
+      <attribute name="title">
+       <string>Page</string>
+      </attribute>
+      <widget class="QLabel" name="fghj">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>-50</y>
+         <width>1021</width>
+         <height>611</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>131</width>
+         <height>91</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../Ajouter bénéficiaire.png</pixmap>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="sendmail">
+       <property name="geometry">
+        <rect>
+         <x>410</x>
+         <y>400</y>
+         <width>101</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#pushButton_14
+{
+background:#ba7191;
+color:white;
+border-radius:15px;
+}
+#pushButton_14:hover
+{
+background:brown;
+color:white;
+border-radius:15px;
+}</string>
+       </property>
+       <property name="text">
+        <string>sendmail</string>
        </property>
       </widget>
      </widget>

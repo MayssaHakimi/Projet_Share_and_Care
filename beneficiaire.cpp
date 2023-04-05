@@ -2,6 +2,11 @@
 #include <QSqlQuery>
 #include <QtDebug>
 #include <QObject>
+#include <QLoggingCategory>
+#include <QDateTime>
+#include <QFileDialog>
+
+
 
 
 Beneficiaire::Beneficiaire(int id_ben , QString nom_ben ,QString prenom_ben,QString lieu_ben,int age_ben, int nb_mf,QString type_demande_ben,int cin_ben,int telephone_ben )
@@ -121,5 +126,23 @@ bool Beneficiaire::modifier()
 
     return query.exec();
 }
+
+QSqlQueryModel* Beneficiaire::tri()
+{
+    QSqlQueryModel* model = new QSqlQueryModel();
+    model->setQuery("SELECT * FROM beneficiaire ORDER BY nom_ben ASC");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("LIEU"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("NOM"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("PRENOM"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("AGE"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("NB MF"));
+    model->setHeaderData(6, Qt::Horizontal, QObject::tr("TYPE DEMANDE"));
+    model->setHeaderData(7, Qt::Horizontal, QObject::tr("DATE AJOUT"));
+    model->setHeaderData(8, Qt::Horizontal, QObject::tr("TEL"));
+
+    return model;
+}
+
 
 

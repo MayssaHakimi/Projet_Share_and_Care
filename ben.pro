@@ -1,6 +1,8 @@
 QT += sql
-
+QT += core
+QT += network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 
 CONFIG += console
 
@@ -18,12 +20,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     beneficiaire.cpp \
     connection.cpp \
+    mail.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     beneficiaire.h \
     connection.h \
+    mail.h \
     mainwindow.h
 
 FORMS += \

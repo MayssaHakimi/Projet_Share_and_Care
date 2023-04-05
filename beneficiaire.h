@@ -3,6 +3,7 @@
 #include<QString>
 #include<QSqlQuery>
 #include<QSqlQueryModel>
+#include <QLoggingCategory>
 
 class Beneficiaire
 {
@@ -42,6 +43,10 @@ public:
     QSqlQueryModel * afficher();
     bool supprimer(int);
     bool modifier();
+    QSqlQueryModel * trouver(int id);
+    QSqlQueryModel * tri();
+    void exportToPdf();
+
 
 };
 
