@@ -12,8 +12,6 @@
 #include<QFileDialog>
 #include <QtCore/QDebug>
 #include <QVBoxLayout>
-#include <QtGui>
-//#include <QZXing.h>
 QT_CHARTS_USE_NAMESPACE
 
 MainWindow::MainWindow(QWidget *parent)
@@ -61,10 +59,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lineEdit_4->clear();
     ui->lineEdit_5->clear();
     ui->lineEdit_10->clear();
-    //code qr
-   /* QZXing decoder;
-    QString result = decoder.decodeImage(QImage("code.png"));*/
-
     //pdf
 
 
@@ -243,7 +237,6 @@ void MainWindow::on_pushButton_8_clicked()
 {
 
     ui->tableView_2->setModel(Adh.recherche_adh(ui->lineEdit_23->text()));
-
 
 }
 

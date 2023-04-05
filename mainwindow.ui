@@ -936,7 +936,7 @@ QTabWidget::tab-bar {
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideLeft</enum>
@@ -1974,23 +1974,6 @@ font: 12pt &quot;Times New Roman&quot;;}
   </string>
           </property>
          </widget>
-        </widget>
-        <widget class="QGroupBox" name="groupBox_5">
-         <property name="geometry">
-          <rect>
-           <x>70</x>
-           <y>310</y>
-           <width>221</width>
-           <height>141</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"> *{ background:qlineargradient(spread:pad, x1:0.058, y1:0.948864, x2:1, y2:0, stop:0 rgba(255, 255, 255, 74), stop:1 rgba(204, 114, 163, 255));
-font: 12pt &quot;Times New Roman&quot;;}</string>
-         </property>
-         <property name="title">
-          <string>GroupBox</string>
-         </property>
         </widget>
        </widget>
       </widget>
