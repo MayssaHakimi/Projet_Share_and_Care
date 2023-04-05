@@ -30,6 +30,12 @@ private slots:
 
     void on_pushButton_8_clicked();
 
+    void on_comboBox_3_currentIndexChanged(const QString &arg1);
+
+    void on_comboBox_4_currentIndexChanged(const QString &arg1);
+
+    void on_pushButton_13_clicked();
+
 private:
     Ui::MainWindow *ui;
     Adherent Adh;
