@@ -48,11 +48,12 @@ public:
     bool modifier_don(int );
     QSqlQueryModel * trieAsc();
     QSqlQueryModel * trieDesc();
-    QSqlQueryModel * recherche_don(QString );
-    QSqlQueryModel * recherche_don_nom(QString );
+    QSqlQueryModel * recherche_don(QString  ,QString);
+
     int vetement( );
     int nourriture( );
-    int vetement_nourriture( );
+
+
 };
 
 #endif // DON_H

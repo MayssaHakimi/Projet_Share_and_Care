@@ -48,7 +48,7 @@ bool Don::ajouter_don()
  {
      QSqlQueryModel * model=new QSqlQueryModel();
      model->setQuery("select id_don , nom_don , prenom_don, cin_don , type_don ,taille , date_v , quantite from DONS");
-     model->setHeaderData(0,Qt::Horizontal,QObject::tr("Id du don"));
+     model->setHeaderData(0,Qt::Horizontal,QObject::tr("Id_du_don"));
      model->setHeaderData(1,Qt::Horizontal,QObject::tr("Nom du donateur"));
      model->setHeaderData(2,Qt::Horizontal,QObject::tr("Prénom du donateur"));
      model->setHeaderData(3,Qt::Horizontal,QObject::tr("Cin du donateur"));
@@ -100,29 +100,13 @@ QSqlQueryModel * Don::trieDesc()
     return model;
  }
 
-QSqlQueryModel * Don::recherche_don( QString type_don )
+QSqlQueryModel * Don::recherche_don( QString type_don ,QString nom_don )
  {
      QSqlQuery query;
     QSqlQueryModel * model=new QSqlQueryModel();
 
-    query.prepare("select id_don , nom_don , prenom_don, cin_don , type_don ,taille , date_v , quantite from DONS where type_don = :type_don ;");
+    query.prepare("select id_don , nom_don , prenom_don, cin_don , type_don ,taille , date_v , quantite from DONS where type_don = :type_don or nom_don = :nom_don ;");
     query.bindValue(":type_don",type_don );
-
-    if(query.exec())
-    {
-        model->setQuery(query);
-   afficher_don();
-}
-
-    return model;
- }
-
-QSqlQueryModel * Don::recherche_don_nom( QString nom_don )
- {
-     QSqlQuery query;
-    QSqlQueryModel * model=new QSqlQueryModel();
-
-    query.prepare("select id_don , nom_don , prenom_don, cin_don , type_don ,taille , date_v , quantite from DONS where nom_don = :nom_don ;");
     query.bindValue(":nom_don",nom_don );
 
     if(query.exec())
@@ -133,6 +117,8 @@ QSqlQueryModel * Don::recherche_don_nom( QString nom_don )
 
     return model;
  }
+
+
 
 int Don::vetement()
  {
@@ -154,17 +140,8 @@ int Don::nourriture()
         int count = query.value(0).toInt();
         return count;
  }
-int Don::vetement_nourriture( )
- {
-    QSqlQuery query;
-        query.prepare("SELECT count(*)  FROM dons WHERE type_don = 'Vetement et Nourriture'");
-        query.exec();
-        query.next();
-        int count = query.value(0).toInt();
-        return count;
 
 
- }
 
 
 

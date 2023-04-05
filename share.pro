@@ -1,9 +1,18 @@
 QT       += core gui sql
 QT += charts
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui sql multimedia printsupport charts network serialport
+
+
 
 TARGET = Atelier_Connexion
 TEMPLATE = app
+
+QT       += serialport
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia multimediawidgets
+
+CONFIG += c++11
+QT +=network
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
