@@ -20,7 +20,7 @@ bool Event::ajouter()
     QString id_string=QString::number(id);
     QString np_string=QString::number(np);
 
-    query.prepare("INSERT INTO EVENEMENT (id, nom_eve,nom_eq,nom_org,np,date_eve,tache) "
+    query.prepare("INSERT INTO EVENEMENT (ID_EVE, NOM_EVE,nom_equipe,nom_organisateur,nbre_participent,date_eve,tache_eve) "
                   "VALUES (:id, :nom_eve, :nom_eq ,:nom_org,:np,:date_eve,:tache)");
 
     query.bindValue(":id",id_string);
@@ -36,13 +36,13 @@ bool Event::ajouter()
 QSqlQueryModel * Event::afficher()
 {
     QSqlQueryModel *model=new QSqlQueryModel();
-    model->setQuery("SELECT * FROM EVENEMENTS");
+    model->setQuery("SELECT * FROM EVENEMENT");
     return model;
 }
 bool Event:: supprimer(int id)
 {
     QSqlQuery query;
-    query.prepare("delete from EVENEMENTS where ID_EVE=:id");
+    query.prepare("delete from EVENEMENT where ID_EVE=:id");
     query.bindValue(":id",id);
     return  query.exec();
 }
@@ -51,7 +51,7 @@ bool Event::existance(QString id)
     QMessageBox msgBox;
     QSqlQuery query;
     int count=0;
-    query.prepare("SELECT * FROM EVENEMENTS WHERE ID_EVE= ?");
+    query.prepare("SELECT * FROM EVENEMENT WHERE ID_EVE= ?");
     query.addBindValue(id);
     if(query.exec() )
     {
@@ -69,3 +69,160 @@ bool Event::existance(QString id)
     }
     return 1;
 }
+QSqlQueryModel * Event::rechercher(QString ch)
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+    QString str="select * from EVENEMENT where NOM_EVE like '"+ch+"%'";
+    model->setQuery(str);
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("date_eve "));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("nom_eve"));
+
+    return model;
+}
+QSqlQueryModel* Event::trie(int a)
+{
+    QSqlQueryModel* model = new QSqlQueryModel();
+    switch(a){
+  case 1 :
+    model->setQuery("select * from EVENEMENT ORDER BY DATE_EVE asc");
+break;
+  case 2 :
+         model->setQuery("select * from EVENEMENT ORDER BY ID_EVE asc");
+        break;
+  case 3 :
+        model->setQuery("select * from EVENEMENT ORDER BY NOM_EVE asc");
+        break;
+    }
+        model->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));
+         model->setHeaderData(1, Qt::Horizontal, QObject::tr("nom_eve"));
+         model->setHeaderData(2, Qt::Horizontal, QObject::tr("date_eve"));
+
+    return model;
+}
+QChart *Event::statistique_chart()
+{
+    QSqlQuery query0,query1,query2,query3,query4;
+
+        qreal c1_1=0,c1_2=0,c1_3=0,c1_4=0;
+
+        int totale=0;
+
+        query0.prepare("SELECT * FROM EVENEMENT");
+        query0.exec();
+
+        query1.prepare("SELECT * FROM EVENEMENT WHERE nom_organisateur='jack'");
+        query1.exec();
+
+        query2.prepare("SELECT * FROM EVENEMENT WHERE nom_organisateur='romeo'");
+        query2.exec();
+
+        query3.prepare("SELECT * FROM EVENEMENT WHERE nom_organisateur='sami'");
+        query3.exec();
+
+        query4.prepare("SELECT * FROM EVENEMENT WHERE nom_organisateur='samir'");
+        query4.exec();
+
+
+
+        while (query0.next()){totale++;}
+
+        while (query1.next()){c1_1++;}
+        while (query2.next()){c1_2++;}
+        while (query3.next()){c1_3++;}
+        while (query4.next()){c1_4++;}
+
+        //totale=totale/2;
+
+        QBarSet *set0 = new QBarSet("nom_organisateur:jack");
+        QBarSet *set1 = new QBarSet("nom_organisateur:romeo");
+        QBarSet *set2 = new QBarSet("nom_organisateur:sami");
+        QBarSet *set3 = new QBarSet("nom_organisateur:samir");
+
+        *set0 << c1_1;
+        *set1 << c1_2;
+        *set2 << c1_3;
+        *set3 << c1_4;
+
+        QBarSeries *series = new QBarSeries();
+        series->append(set0);
+        series->append(set1);
+        series->append(set2);
+        series->append(set3);
+
+        QChart *chart = new QChart();
+        chart->addSeries(series);
+        chart->setTitle("Statistique des organisateurs par rapport aux evenements");
+        chart->setAnimationOptions(QChart::SeriesAnimations);
+        chart->setTheme(QChart::ChartThemeBlueCerulean);
+
+        QStringList nom_organisateur = {"jack", "romeo", "sami", "samir"};
+        QBarCategoryAxis *axisX = new QBarCategoryAxis();
+        axisX->append(nom_organisateur);
+        chart->addAxis(axisX, Qt::AlignBottom);
+        series->attachAxis(axisX);
+
+        QValueAxis *axisY = new QValueAxis();
+        axisY->setRange(0,totale);
+        chart->addAxis(axisY, Qt::AlignLeft);
+        series->attachAxis(axisY);
+
+        QPalette pal = qApp->palette();
+        pal.setColor(QPalette::Window, QRgb(0xffffff));
+        pal.setColor(QPalette::WindowText, QRgb(0x404044));
+        qApp->setPalette(pal);
+
+        return chart;
+    }
+
+/*// This function sets a reminder to show a message box with the given reminder text at the given date and time
+void setReminder(const QString &reminderText, const QDateTime &reminderDateTime)
+{
+    // Calculate the time difference between the current time and the reminder time
+    qint64 timeDiff = QDateTime::currentDateTime().msecsTo(reminderDateTime);
+
+    // If the reminder time is in the past, show an error message and return
+    if (timeDiff < 0) {
+        QMessageBox::critical(nullptr, "Error", "The reminder time is in the past.");
+        return;
+    }
+
+    // Create a timer object that will trigger the reminder at the specified time
+    QTimer *timer = new QTimer(nullptr);
+    timer->setSingleShot(true);
+    timer->setInterval(timeDiff);
+    QObject::connect(timer, &QTimer::timeout, [=]() {
+        QMessageBox::information(nullptr, "Reminder", reminderText);
+        timer->deleteLater(); // Cleanup the timer object
+    });
+    // Start the timer
+      timer->start();
+  }
+
+                                //fonction pdf
+ QString fileName = Event::getSaveFileName((QWidget* )0, "Export PDF", QString(), "*.pdf");
+         if (QFileInfo(fileName).suffix().isEmpty()) { fileName.append(".pdf"); }
+                QPrinter printer(QPrinter::PrinterResolution);
+                               //fonction pdf 2
+void Event::saveToPdf(const QString& filename, const QString& text)
+{
+    // create text file
+    QFile file(filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QMessageBox::warning(this, "Error", "Could not create file.");
+        return;
+    }
+    QTextStream out(&file);
+    out << text;
+    file.close();
+
+    // create PDF file
+    QPrinter printer(QPrinter::PrinterResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName(filename + ".pdf");
+    QTextDocument doc;
+    doc.setHtml(text);
+    doc.print(&printer);
+}
+
+*/

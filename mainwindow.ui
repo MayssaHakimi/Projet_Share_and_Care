@@ -307,7 +307,7 @@ QTabWidget::tab-bar {
 </string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="Ajouter">
       <attribute name="title">
@@ -475,7 +475,7 @@ font: 12pt &quot;Times New Roman&quot;;
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">#pushButton_7
+         <string notr="true">#ajouter
 {
 
 background:#422c30;
@@ -486,7 +486,7 @@ border-radius:15px;
 
 }
 
-#pushButton_7:hover
+#ajouter:hover
 
 {
 
@@ -569,6 +569,219 @@ font: 12pt &quot;Times New Roman&quot;;
          </rect>
         </property>
        </widget>
+       <widget class="QPushButton" name="modifier_2">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>290</y>
+          <width>75</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#modifier_2
+
+{
+
+background:#422c30;
+
+color:white;
+
+border-radius:15px;
+
+}
+
+#modifier_2:hover
+
+{
+
+background:brown;
+
+color:white;
+
+border-radius:15px;
+
+}</string>
+        </property>
+        <property name="text">
+         <string>Modifier</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="supprimer_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>290</y>
+          <width>75</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#supprimer_2
+
+{
+
+background:#422c30;
+
+color:white;
+
+border-radius:15px;
+
+}
+
+#supprimer_2:hover
+
+{
+
+background:brown;
+
+color:white;
+
+border-radius:15px;
+
+}</string>
+        </property>
+        <property name="text">
+         <string>Supprimer</string>
+        </property>
+       </widget>
+       <widget class="QTableView" name="tableView_2">
+        <property name="geometry">
+         <rect>
+          <x>280</x>
+          <y>20</y>
+          <width>351</width>
+          <height>181</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="rechercher">
+        <property name="geometry">
+         <rect>
+          <x>410</x>
+          <y>250</y>
+          <width>91</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"> #rechercher
+{
+
+background:#422c30;
+
+color:white;
+
+border-radius:15px;
+
+}
+
+#rechercher:hover
+
+{
+
+background:brown;
+
+color:white;
+
+border-radius:15px;
+font: 12pt &quot;Times New Roman&quot;;
+
+
+}</string>
+        </property>
+        <property name="text">
+         <string>rechercher</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="comboBox">
+        <property name="geometry">
+         <rect>
+          <x>540</x>
+          <y>230</y>
+          <width>62</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#comboBox
+{
+
+background:#422c30;
+
+color:white;
+
+border-radius:15px;
+
+}
+
+</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>tri par date</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>tri par id</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>tri par nom</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QLineEdit" name="recherche">
+        <property name="geometry">
+         <rect>
+          <x>280</x>
+          <y>260</y>
+          <width>113</width>
+          <height>20</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="savetopdf">
+        <property name="geometry">
+         <rect>
+          <x>340</x>
+          <y>300</y>
+          <width>75</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#savetopdf
+{
+
+background:#422c30;
+
+color:white;
+
+border-radius:15px;
+
+}
+
+#savetopdf:hover
+
+{
+
+background:brown;
+
+color:white;
+
+border-radius:15px;
+font: 12pt &quot;Times New Roman&quot;;
+
+
+}</string>
+        </property>
+        <property name="text">
+         <string>pdf</string>
+        </property>
+       </widget>
        <zorder>label_15</zorder>
        <zorder>label</zorder>
        <zorder>nom_eve</zorder>
@@ -585,406 +798,14 @@ font: 12pt &quot;Times New Roman&quot;;
        <zorder>id</zorder>
        <zorder>label_5</zorder>
        <zorder>tache</zorder>
+       <zorder>modifier_2</zorder>
+       <zorder>supprimer_2</zorder>
+       <zorder>tableView_2</zorder>
+       <zorder>rechercher</zorder>
+       <zorder>comboBox</zorder>
+       <zorder>recherche</zorder>
+       <zorder>savetopdf</zorder>
       </widget>
-     </widget>
-     <widget class="QWidget" name="Afficher">
-      <attribute name="title">
-       <string>Afficher</string>
-      </attribute>
-      <widget class="QLabel" name="label_26">
-       <property name="geometry">
-        <rect>
-         <x>380</x>
-         <y>50</y>
-         <width>341</width>
-         <height>331</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap>../Nouveau dossier/3.png</pixmap>
-       </property>
-      </widget>
-      <widget class="QTableView" name="tableView">
-       <property name="geometry">
-        <rect>
-         <x>100</x>
-         <y>40</y>
-         <width>351</width>
-         <height>181</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_9">
-       <property name="geometry">
-        <rect>
-         <x>110</x>
-         <y>240</y>
-         <width>113</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font: 12pt &quot;Times New Roman&quot;;</string>
-       </property>
-       <property name="text">
-        <string>Rechercher</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_9">
-       <property name="geometry">
-        <rect>
-         <x>120</x>
-         <y>280</y>
-         <width>75</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"> 
-#pushButton_9
-{
-
-background:#422c30;
-
-color:white;
-
-border-radius:15px;
-
-}
-
-#pushButton_9:hover
-
-{
-
-background:brown;
-
-color:white;
-
-border-radius:15px;
-font: 12pt &quot;Times New Roman&quot;;
-
-
-}</string>
-       </property>
-       <property name="text">
-        <string>Tri</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="Modification">
-      <attribute name="title">
-       <string>Modification</string>
-      </attribute>
-      <widget class="QGroupBox" name="groupBox_4">
-       <property name="geometry">
-        <rect>
-         <x>60</x>
-         <y>50</y>
-         <width>551</width>
-         <height>301</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font: 12pt &quot;Times New Roman&quot;;</string>
-       </property>
-       <property name="title">
-        <string>modifiez la liste</string>
-       </property>
-       <widget class="QLabel" name="label_18">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>40</y>
-          <width>121</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 12pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Nom d'évènement</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_19">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>80</y>
-          <width>91</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 12pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Nom d'equipe</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_20">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>110</y>
-          <width>111</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 12pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Nom organisateur </string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_21">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>140</y>
-          <width>141</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 12pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Nombre participants</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_24">
-        <property name="geometry">
-         <rect>
-          <x>40</x>
-          <y>240</y>
-          <width>47</width>
-          <height>14</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 12pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Date</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="nom_eve2">
-        <property name="geometry">
-         <rect>
-          <x>140</x>
-          <y>40</y>
-          <width>113</width>
-          <height>20</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="nom_eq2">
-        <property name="geometry">
-         <rect>
-          <x>140</x>
-          <y>70</y>
-          <width>113</width>
-          <height>20</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="nom_org2">
-        <property name="geometry">
-         <rect>
-          <x>140</x>
-          <y>100</y>
-          <width>113</width>
-          <height>20</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QSpinBox" name="np2">
-        <property name="geometry">
-         <rect>
-          <x>160</x>
-          <y>140</y>
-          <width>42</width>
-          <height>22</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QDateEdit" name="date2">
-        <property name="geometry">
-         <rect>
-          <x>90</x>
-          <y>240</y>
-          <width>110</width>
-          <height>22</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="modifier">
-        <property name="geometry">
-         <rect>
-          <x>400</x>
-          <y>252</y>
-          <width>75</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">#pushButton_8
-
-{
-
-background:#422c30;
-
-color:white;
-
-border-radius:15px;
-
-}
-
-#pushButton_8:hover
-
-{
-
-background:brown;
-
-color:white;
-
-border-radius:15px;
-
-}</string>
-        </property>
-        <property name="text">
-         <string>Modifier</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_25">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>20</y>
-          <width>561</width>
-          <height>281</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap>../Nouveau dossier/3.png</pixmap>
-        </property>
-       </widget>
-       <zorder>label_25</zorder>
-       <zorder>label_18</zorder>
-       <zorder>label_19</zorder>
-       <zorder>label_20</zorder>
-       <zorder>label_21</zorder>
-       <zorder>label_24</zorder>
-       <zorder>nom_eve2</zorder>
-       <zorder>nom_eq2</zorder>
-       <zorder>nom_org2</zorder>
-       <zorder>np2</zorder>
-       <zorder>date2</zorder>
-       <zorder>modifier</zorder>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="Suppression">
-      <attribute name="title">
-       <string>Suppression</string>
-      </attribute>
-      <widget class="QLabel" name="label_14">
-       <property name="geometry">
-        <rect>
-         <x>30</x>
-         <y>120</y>
-         <width>161</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font: 12pt &quot;Times New Roman&quot;;</string>
-       </property>
-       <property name="text">
-        <string>Entrez le id d'evenement</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="id2">
-       <property name="geometry">
-        <rect>
-         <x>210</x>
-         <y>120</y>
-         <width>113</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">*{background:rgb(255, 170, 255);}</string>
-       </property>
-       <property name="text">
-        <string>40</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="supprimer">
-       <property name="geometry">
-        <rect>
-         <x>350</x>
-         <y>110</y>
-         <width>75</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">#pushButton_12
-
-{
-
-background:#422c30;
-
-color:white;
-
-border-radius:15px;
-
-}
-
-#pushButton_12:hover
-
-{
-
-background:brown;
-
-color:white;
-
-border-radius:15px;
-
-}</string>
-       </property>
-       <property name="text">
-        <string>Supprimer</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_13">
-       <property name="geometry">
-        <rect>
-         <x>16</x>
-         <y>30</y>
-         <width>581</width>
-         <height>311</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap>../Nouveau dossier/3.png</pixmap>
-       </property>
-      </widget>
-      <zorder>label_13</zorder>
-      <zorder>label_14</zorder>
-      <zorder>id2</zorder>
-      <zorder>supprimer</zorder>
      </widget>
      <widget class="QWidget" name="Todo">
       <attribute name="title">
@@ -1041,7 +862,7 @@ border-radius:15px;
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">#pushButton_13
+         <string notr="true">#pdf
 
 {
 
@@ -1055,7 +876,7 @@ font: 12pt &quot;Times New Roman&quot;;
 
 }
 
-#pushButton_13:hover
+#pdf:hover
 
 {
 
@@ -1097,20 +918,14 @@ font: 12pt &quot;Times New Roman&quot;;
        <property name="title">
         <string>Statistiques</string>
        </property>
-       <widget class="QLabel" name="label_12">
+       <widget class="QWidget" name="stats" native="true">
         <property name="geometry">
          <rect>
-          <x>110</x>
-          <y>60</y>
-          <width>601</width>
-          <height>341</height>
+          <x>109</x>
+          <y>89</y>
+          <width>511</width>
+          <height>231</height>
          </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap>../../Downloads/m.PNG</pixmap>
         </property>
        </widget>
       </widget>

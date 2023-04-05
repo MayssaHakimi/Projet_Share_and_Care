@@ -13,14 +13,16 @@
 #include<QSqlQuery>
 #include<QtDebug>
 #include<QObject>
-#include<QString>
+#include <QString>
 #include <QMessageBox>
 #include <QApplication>
 #include <QtCore>
 #include <QPdfWriter>
 #include <QPainter>
-
-
+#include <Windows.h>
+#include <QDateTime>
+#include <QTimer>
+#include <QtCharts>
 class Event
 {
 private:
@@ -39,6 +41,10 @@ public:
     bool supprimer(int);
     bool modifier(int);
     bool existance(QString);
+   QSqlQueryModel * rechercher(QString);
+    QSqlQueryModel* trie(int a);
+    QChart * statistique_chart();
+  /*  void SetReminder(const wchar_t, int );*/
 };
 
 #endif // EVENT_H
