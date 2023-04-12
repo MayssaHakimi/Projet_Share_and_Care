@@ -6,13 +6,13 @@ QT       += core gui sql multimedia printsupport charts network serialport
 
 TARGET = Atelier_Connexion
 TEMPLATE = app
-
+QT += network
 QT       += serialport
-
+QT       += core gui  serialport
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia multimediawidgets
 
 CONFIG += c++11
-QT +=network
+
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -28,15 +28,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    arduinodon.cpp \
+    client.cpp \
     don.cpp \
+    liaison.cpp \
         main.cpp \
         mainwindow.cpp \
-    connection.cpp
+    connection.cpp \
+    peermanager.cpp \
+    server.cpp
 
 HEADERS += \
+    arduinodon.h \
+    client.h \
     don.h \
+    liaison.h \
         mainwindow.h \
-    connection.h
+    connection.h \
+    peermanager.h \
+    server.h
 
 FORMS += \
         mainwindow.ui

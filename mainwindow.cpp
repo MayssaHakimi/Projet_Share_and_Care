@@ -18,7 +18,12 @@
 #include <QFileDialog>
 #include <QPrinter>
 
-
+#include <QtNetwork/QNetworkAccessManager>
+#include <QUrlQuery>
+#include <QtNetwork/QNetworkReply>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QtWidgets>
 #include <QtCore/qobject.h>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkRequest>
@@ -27,15 +32,14 @@
 #include <iostream>
 #include <string>
 #include <memory>
-
+#include <QtNetwork>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
+ #include <QtNetwork>
 #include <QDateTime>
 #include <QSslSocket>
 
-//#include "twilio.hh"
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -44,6 +48,20 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //arduino
+    int ret=Adon.connect_arduino(); // lancer la connexion à arduino
+    switch(ret){
+    case(0):qDebug()<< "arduino is available and connected to : "<< Adon.getarduino_port_name();
+        break;
+    case(1):qDebug() << "arduino is available but not connected to :" <<Adon.getarduino_port_name();
+       break;
+    case(-1):qDebug() << "arduino is not available";
+    }
+     QObject::connect(Adon.getserial(),SIGNAL(readyRead()),this,SLOT(update_label())); // permet de lancer
+     //le slot update_label suite à la reception du signal readyRead (reception des données).
+
+
+    //////////////////////////////////////////////
     ui->lineEdit_2->setValidator(new QIntValidator(0,999999999,this));
     ui->tab_affiche_2->setModel(Do.afficher_don());
      on_pushButton_22_clicked();
@@ -76,7 +94,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 
-statistique_don();
+
+
+
 
 QSqlQuery query;
 query.exec("SELECT id_don FROM DONS");
@@ -84,45 +104,6 @@ query.exec("SELECT id_don FROM DONS");
 while (query.next()) {
     QString id_don = query.value(0).toString();
     ui->comboBox_3->addItem(id_don);
-
-
-
-
-
-
-
-
-   // chat
-  QSslSocket socket;
-    // Check for SSL support.  If SSL support is not available, show a
-    // message to the user describing what to do to enable SSL support.
-    if (QSslSocket::supportsSsl())
-    {
-      ui->pushButton_9->setEnabled(true);
-    }
-    else
-    {
-      QString noSslMsg = QString("%1\n%2")
-          .arg("*** Your version of Qt does support SSL ***")
-          .arg("You must obtain a version of Qt that has SSL"
-               "support enabled.  If you believe that your "
-               "version of Qt has SSL support enabeld, you may "
-               "need to install the OpenSSL run-time libraries.");
-
-      ui->textEdit->setText(noSslMsg);
-    }
-
-    // QSslSocket emits the encrypted() signal after the encrypted connection is established
-    connect(&socket, SIGNAL(encrypted()), this, SLOT(connectedToServer()));
-
-    // Report any SSL errors that occur
-    connect(&socket, SIGNAL(sslErrors(const QList<QSslError> &)), this, SLOT(sslErrors(const QList<QSslError> &)));
-
-    connect(&socket, SIGNAL(disconnected()), this, SLOT(connectionClosed()));
-    connect(&socket, SIGNAL(readyRead()), this, SLOT(receiveMessage()));
-    connect(&socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError()));
-
-
 
 }
 
@@ -136,6 +117,28 @@ ui->dateEdit->clear();;
 ui->spinBox->clear();;
 ui->spinBox_2->clear();
 
+statistique_don();
+// chat
+
+ui->lineEdit_6->setFocusPolicy(Qt::StrongFocus);
+ui->textEdit_2->setFocusPolicy(Qt::NoFocus);
+ui->textEdit_2->setReadOnly(true);
+ui->listWidget->setFocusPolicy(Qt::NoFocus);
+
+connect(ui->lineEdit_6, SIGNAL(returnPressed()), this, SLOT(returnPressed()));
+connect(ui->lineEdit_6, SIGNAL(returnPressed()), this, SLOT(returnPressed()));
+connect(&client, SIGNAL(newMessage(QString,QString)),
+        this, SLOT(appendMessage(QString,QString)));
+connect(&client, SIGNAL(newParticipant(QString)),
+        this, SLOT(newParticipant(QString)));
+connect(&client, SIGNAL(participantLeft(QString)),
+        this, SLOT(participantLeft(QString)));
+
+myNickName = client.nickName();
+newParticipant(myNickName);
+tableFormat.setBorder(0);
+QTimer::singleShot(10 * 1000, this, SLOT(showInformation()));
+
 }
 
 MainWindow::~MainWindow()
@@ -147,7 +150,86 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-/*void MainWindow::send_sms()
+
+void MainWindow::appendMessage(const QString &from, const QString &message)
+{
+    if (from.isEmpty() || message.isEmpty())
+        return;
+
+    QTextCursor cursor(ui->textEdit_2->textCursor());
+    cursor.movePosition(QTextCursor::End);
+    QTextTable *table = cursor.insertTable(1, 2, tableFormat);
+    table->cellAt(0, 0).firstCursorPosition().insertText('<' + from + "> ");
+    table->cellAt(0, 1).firstCursorPosition().insertText(message);
+    QScrollBar *bar = ui->textEdit_2->verticalScrollBar();
+    bar->setValue(bar->maximum());
+}
+
+void MainWindow::returnPressed()
+{
+    QString text = ui->lineEdit_6->text();
+    if (text.isEmpty())
+        return;
+
+    if (text.startsWith(QChar('/'))) {
+        QColor color = ui->textEdit_2->textColor();
+        ui->textEdit_2->setTextColor(Qt::red);
+        ui->textEdit_2->append(tr("! Unknown command: %1")
+                         .arg(text.left(text.indexOf(' '))));
+        ui->textEdit_2->setTextColor(color);
+    } else {
+        client.sendMessage(text);
+        appendMessage(myNickName, text);
+    }
+
+    ui->lineEdit_6->clear();
+}
+
+void MainWindow::newParticipant(const QString &nick)
+{
+    if (nick.isEmpty())
+        return;
+
+    QColor color = ui->textEdit_2->textColor();
+    ui->textEdit_2->setTextColor(Qt::gray);
+    ui->textEdit_2->append(tr("* %1 has joined").arg(nick));
+    ui->textEdit_2->setTextColor(color);
+    ui->listWidget->addItem(nick);
+}
+
+void MainWindow::participantLeft(const QString &nick)
+{
+    if (nick.isEmpty())
+        return;
+
+    QList<QListWidgetItem *> items = ui->listWidget->findItems(nick,
+                                                           Qt::MatchExactly);
+    if (items.isEmpty())
+        return;
+
+    delete items.at(0);
+    QColor color = ui->textEdit_2->textColor();
+    ui->textEdit_2->setTextColor(Qt::gray);
+    ui->textEdit_2->append(tr("* %1 has left").arg(nick));
+    ui->textEdit_2->setTextColor(color);
+}
+
+void MainWindow::showInformation()
+{
+    if (ui->listWidget->count() == 1) {
+        QMessageBox::information(this, tr("Chat"),
+                                 tr("Launch several instances of this "
+                                    "program on your local network and "
+                                    "start chatting!"));
+    }
+}
+
+
+
+
+
+
+void MainWindow::send_sms()
 {
     QNetworkAccessManager *manager = new QNetworkAccessManager();
     QObject::connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
@@ -166,12 +248,12 @@ MainWindow::~MainWindow()
     params.addQueryItem("MessagingServiceSid", "MG7d2ddea98fe438f60aa5bbe1ac6bbb1d");
 
     params.addQueryItem("To", "+21697336009"); // le numéro de téléphone du destinataire
-    params.addQueryItem("Body", "Ceci est un SMS de test !");
+    params.addQueryItem("Body", "Un don a été supprimé !");
 
     url.setQuery(params);
     QByteArray data = url.toEncoded(QUrl::RemoveFragment);
 
-    request.setRawHeader("Authorization", "Basic " + QByteArray(QString("%1:%2").arg("AC6b2316ab038b93972d30b2342f18eff1").arg("c674734c7e670191c949050f4269fd41").toUtf8()).toBase64());
+    request.setRawHeader("Authorization", "Basic " + QByteArray(QString("%1:%2").arg("AC6b2316ab038b93972d30b2342f18eff1").arg("0ee64390dcf947717c204aa570d0c40b").toUtf8()).toBase64());
     QNetworkReply *reply = manager->post(request, data);
 
     if (reply->error() != QNetworkReply::NoError) {
@@ -179,51 +261,10 @@ MainWindow::~MainWindow()
     }
 
 }
-*/
 
-#include <QtNetwork/QNetworkAccessManager>
-#include <QUrlQuery>
-#include <QtNetwork/QNetworkReply>
-#include <QJsonDocument>
-#include <QJsonObject>
 
-void MainWindow::sendSMS(QString apiKey, QString apiSecret, QString from, QString to, QString message)
-{
-    QNetworkAccessManager manager;
-    QUrl url("https://rest.nexmo.com/sms/json");
 
-    QUrlQuery params;
-    params.addQueryItem("3a33612e", apiKey);
-    params.addQueryItem("sdix6w22WWFy5EoC", apiSecret);
-    params.addQueryItem("Vonage APIs", from);
-    params.addQueryItem("21697336009", to);
-    params.addQueryItem("text", message);
-    url.setQuery(params);
 
-    QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-    QNetworkReply *reply = manager.post(request, QByteArray());
-    while (!reply->isFinished())
-    {
-        qApp->processEvents();
-    }
-
-    QByteArray data = reply->readAll();
-    QJsonDocument doc = QJsonDocument::fromJson(data);
-    QJsonObject obj = doc.object();
-    QJsonArray messages = obj.value("messages").toArray();
-    QJsonObject messageObj = messages.first().toObject();
-    QString status = messageObj.value("status").toString();
-    if (status == "0")
-    {
-        // Le SMS a été envoyé avec succès
-    }
-    else
-    {
-        // Une erreur s'est produite lors de l'envoi du SMS
-    }
-}
 
 
 void MainWindow::on_pushButton_3_clicked()
@@ -244,6 +285,8 @@ void MainWindow::on_pushButton_3_clicked()
 
     if (test)
    {
+
+
         ui->comboBox_3->clear();
 
         QSqlQuery query;
@@ -289,8 +332,8 @@ void MainWindow::on_pushButton_20_clicked()
 
 
      if (test)
-    {   //send_sms();
-         sendSMS("3a33612e","sdix6w22WWFy5EoC","Vonage APIs","21697336009","text");
+    {   send_sms();
+
          ui->tab_affiche_2->setModel(Do.afficher_don());
 
          ui->comboBox_3->clear();
@@ -382,17 +425,15 @@ void MainWindow::on_pushButton_7_clicked()
 
 void MainWindow::statistique_don()
 {
-
-
-
-
             QBarSet *set0 = new QBarSet("Vetement");
             QBarSet *set1 = new QBarSet("Nourriture");
 
 
+      //   *set0 << Do.getVetement()<< 0 << 0;
+       //     *set1 << 0 << Do.getNourriture();
 
-            *set0 << Do.vetement();
-            *set1 << Do.nourriture();
+           *set0 <<  Do.calculer_type("Vetement")<< 0 << 0;
+            *set1 << 0 << Do.calculer_type("Nourriture") ;
 
             QBarSeries *series = new QBarSeries();
             series->append(set0);
@@ -406,7 +447,8 @@ void MainWindow::statistique_don()
             chart->setTheme(QChart::ChartThemeBrownSand);
 
             QStringList categories;
-            categories << "Type de don" ;
+            categories << "Vetement"
+                            << 0 << "Nourriture";
 
                   QBarCategoryAxis *axis = new QBarCategoryAxis();
                   axis->append(categories);
@@ -423,34 +465,32 @@ void MainWindow::statistique_don()
 
 
 
-                  QGridLayout *mainLayout = new QGridLayout;
+
+//chart->legend()->hide();
+
+
+
+
+//setMinimumSize(800, 600);
+
+                 // QGridLayout *mainLayout = new QGridLayout;
+                  QGridLayout *mainLayout = new QGridLayout(ui->frame);
+
                   mainLayout->addWidget(chartview, 1, 1);
-                   ui->groupBox_2->setLayout(mainLayout);
-                  setMinimumSize(800, 600);
+
+                 //  ui->frame->setLayout(mainLayout);
+                 chartview->setMinimumSize(681, 331);
+                 chartview->resize(681, 331);
+                 chartview->setParent(ui->frame);
+
+chartview->show();
+
+
 
 
 
 }
 
-void MainWindow::statistique_don_update()
-{
-
-    // Accéder au layout actuel du groupBox_2
-    QLayout *currentLayout = ui->groupBox_2->layout();
-
-    // Supprimer tous les widgets enfants du groupBox_2
-    if (currentLayout != nullptr)
-    {
-        QLayoutItem *item;
-        while ((item = currentLayout->takeAt(0)) != nullptr)
-        {
-            delete item->widget();
-            delete item;
-        }
-    }
-
- statistique_don();
-}
 
 
 
@@ -485,26 +525,26 @@ void MainWindow::on_comboBox_3_currentIndexChanged(const QString& id_don)
 
 
 
-
+//PDF
 void MainWindow::on_pushButton_24_clicked()
 {
     QSqlQueryModel model;
-          model.setQuery("select id_don , nom_don , prenom_don, cin_don , type_don ,taille , date_v , quantite from DONS");
+          model.setQuery("select  nom_don , prenom_don, cin_don , type_don ,taille , date_v , quantite from DONS");
 
-           QString html = "<table  border='2'> <thead> <tr> <th>#</th> <th>Id</th> <th>Nom de donateur</th> <th>Prenom de donateur</th> <th> CIN de donateur</th> <th> Type de don</th> <th> Taille </th><th> Date de validité </th> <th> Quantité </th> </tr> </thead><tbody > ";
+           QString html = "<table  border='2'> <thead> <tr>  <th>Nom de donateur</th> <th>Prenom de donateur</th> <th> CIN de donateur</th> <th> Type de don</th> <th> Taille </th><th> Date de validité </th> <th> Quantité </th> </tr> </thead><tbody > ";
 
 
           for (int i = 0; i < model.rowCount(); ++i) {
 
-              QString id_don = model.record(i).value("id_don").toString();
+
                        QString quantite = model.record(i).value("quantite").toString();
                                 QString taille = model.record(i).value("taille").toString();
-                                 QString cin_don = model.record(i).value("cin_don").toString();
+                                 QString cin_donateur = model.record(i).value("cin_don").toString();
                                    QString  type_don = model.record(i).value(" type_don").toString();
                                      QString date_v = model.record(i).value("date_v").toString();
                                              QString nom_don = model.record(i).value("nom_don").toString();
               QString prenom_don = model.record(i).value("prenom_don").toString();
-   html += "<tr > <td>"+id_don+"</td> <td>"+nom_don+"</td> <td>"+prenom_don+"</td><td>"+cin_don+"</td><td>"+type_don+"</td><td>"+taille+"</td><td>"+date_v+"</td> <td>"+quantite+"</td></tr>";
+   html += "<tr >   <td>"+nom_don+"</td> <td>"+prenom_don+"</td><td>"+cin_donateur+"</td><td>"+type_don+"</td><td>"+taille+"</td><td>"+date_v+"</td> <td>"+quantite+"</td></tr>";
           }
        html+="</tbody></table>";
        QString strStream;
@@ -515,17 +555,21 @@ void MainWindow::on_pushButton_24_clicked()
 
        out <<  "<html>\n"
            "<head>\n"
+
            "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+
+
+
            <<  QString("<title>%1</title>\n").arg("strTitle")
            <<  "</head>\n"
-           "<body bgcolor=#ffffff link=#5000A0>\n"
+           "<body bgcolor=#dfabc9 link=#5000A0>\n"
 
            //     "<align='right'> " << datefich << "</align>"
-           "<center> <H1>Liste Des dons </H1></br></br><table border=1 cellspacing=0 cellpadding=2>\n";
+           "<center>  <img src='C:/unnamed.png'></img>  <H1>Liste des dons </H1></br></br><table border=1 cellspacing=0 cellpadding=2>\n";
 
        // headers
-       out << "<thead><tr bgcolor=#f0f0f0> <th>Numero</th>";
-       for (int column = 0; column < columnCount; column++)
+       out << "<thead><tr bgcolor=#ba7191> <th>Numero</th>";
+      for (int column = 0; column < columnCount; column++)
            if (!ui->tab_affiche_2->isColumnHidden(column))
                out << QString("<th>%1</th>").arg(ui->tab_affiche_2->model()->headerData(column, Qt::Horizontal).toString());
        out << "</tr></thead>\n";
@@ -536,7 +580,7 @@ void MainWindow::on_pushButton_24_clicked()
            out << "<tr> <td bkcolor=0>" << row + 1 << "</td>";
            for (int column = 0; column < columnCount; column++)
            {
-               if (!ui->tab_affiche_2->isColumnHidden(column))
+              if (!ui->tab_affiche_2->isColumnHidden(column))
                {
                    QString data = ui->tab_affiche_2->model()->data(ui->tab_affiche_2->model()->index(row, column)).toString().simplified();
                    out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
@@ -571,95 +615,28 @@ void MainWindow::on_pushButton_24_clicked()
        doc.print(&printer);
 }
 
-void MainWindow::on_pushButton_16_pressed()
+
+
+void MainWindow::on_pushButton_10_clicked()
 {
-      QSslSocket socket;
-    QString message = ui->lineEdit_4->text();
-    if (!message.isEmpty())
-    {
-      message += '\n';
-      socket.write(message.toLocal8Bit().constData());
-      ui->lineEdit_4->clear();
-    }
+statistique_don();
 }
 
-void MainWindow::on_pushButton_9_pressed()
-{
-      QSslSocket socket;
-    ui->pushButton_9->setEnabled(false);
-
-    if (socket.state() == QAbstractSocket::UnconnectedState)
-    {
-      // Initiate an SSL connection to the chat server.
-      socket.connectToHostEncrypted(ui->lineEdit_5->text(), ui->spinBox_3->value());
-    }
-    else
-    {
-      socket.close();
-    }
+// arduino
+//vetement
+void MainWindow::on_pushButton_9_clicked()
+{int vet = Do.getVetement();
+    if (vet==0)
+     {Adon.write_to_arduino("0");}
+    else Adon.write_to_arduino("1");
 }
-
-void MainWindow::connectedToServer()
+//nourriture
+void MainWindow::on_pushButton_11_clicked()
 {
-  ui->pushButton_9->setText("Disconnect");
-  ui->pushButton_9->setEnabled(true);
-  ui->lineEdit_4->setEnabled(true);
-  ui->pushButton_16->setEnabled(true);
-  ui->textEdit->clear();
+    int nourr = Do.getNourriture();
+
+        if (nourr==0)
+         {Adon.write_to_arduino("2");}
+        else Adon.write_to_arduino("3");
 }
-
-// Process SSL errors
-void MainWindow::sslErrors(const QList<QSslError> &errors)
-{
-     QSslSocket socket;
-  QString errorStrings;
-  foreach (QSslError error, errors)
-  {
-    errorStrings += error.errorString();
-    if (error != errors.last())
-    {
-      errorStrings += '\n';
-    }
-  }
-
-  // Display error details to user and ask for permission to proceed anyway
-  QMessageBox::StandardButton result = QMessageBox::question(this, "SSL Errors",
-    QString("The following errors were encountered while negotiating the SSL connection:\n\n%1\n\nProceed anyway?").arg(errorStrings),
-    QMessageBox::Yes|QMessageBox::No);
-  if (result == QMessageBox::Yes)
-  {
-    socket.ignoreSslErrors();
-  }
-}
-
-void MainWindow::receiveMessage()
-{
-     QSslSocket socket;
-  if (socket.canReadLine())
-  {
-    ui->textEdit->append(QString("[%1] %2")
-                                    .arg(QDateTime::currentDateTime().toString("hh:mm:ss.zzz ap"))
-                                    .arg(socket.readLine().constData()));
-  }
-}
-
-void MainWindow::connectionClosed()
-{
-  ui->pushButton_9->setText("Connect");
-  ui->pushButton_9->setEnabled(true);
-  ui->lineEdit_4->setEnabled(false);
-  ui->pushButton_16->setEnabled(false);
-}
-
-void MainWindow::socketError()
-{
-     QSslSocket socket;
-  ui->textEdit->setText(QString("Socket Error: %1").arg(socket.errorString()));
-  if (socket.state() != QAbstractSocket::ConnectedState)
-  {
-    connectionClosed();
-  }
-  socket.close();
-}
-
-
+///////////////////////////////////////::::::::::

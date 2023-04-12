@@ -141,7 +141,19 @@ int Don::nourriture()
         return count;
  }
 
+int Don::calculer_type(QString type_don)
+{
+      QSqlQuery query;
 
+      query.prepare("select * from dons where (type_don = :type_don)");
+      query.bindValue(":type_don", type_don);
+
+   query.exec();
+      int total = 0;
+      while (query.next()) {
+        total++;
+      }
+return total;}
 
 
 

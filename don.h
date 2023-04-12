@@ -18,7 +18,7 @@ private:
     QString taille;
     int quantite ;
     QString date_v;
-
+int count = 0;
 public:
     Don(){
 
@@ -49,7 +49,13 @@ public:
     QSqlQueryModel * trieAsc();
     QSqlQueryModel * trieDesc();
     QSqlQueryModel * recherche_don(QString  ,QString);
+    int calculer_type(QString type_don) ;
 
+    int getVetement(){return  count ;}
+    int getNourriture(){return count ;}
+    void setVetement(int count){this->count=count;}
+    void setNourriture(int count){this->count=count;}
+private:
     int vetement( );
     int nourriture( );
 
