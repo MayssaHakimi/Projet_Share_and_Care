@@ -45,6 +45,7 @@ public:
     bool modifier();
     QSqlQueryModel * trouver(int id);
     QSqlQueryModel * tri();
+    QSqlQueryModel * tri2();
     void exportToPdf();
 
 

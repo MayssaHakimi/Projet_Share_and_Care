@@ -41,6 +41,16 @@ private slots:
 
     void on_sendmail_clicked();
 
+    void on_mailbutt_clicked();
+
+
+
+    void on_statbutton_clicked();
+
+    void on_aff_clicked();
+
+    void on_pushButton_tri_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     Beneficiaire B;

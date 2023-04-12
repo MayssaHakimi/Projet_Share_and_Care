@@ -1,10 +1,14 @@
 QT += sql
 QT += core
 QT += network
+QT += widgets charts
+QT += printsupport
+QT += charts
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 
-CONFIG += console
+CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -20,15 +24,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     beneficiaire.cpp \
     connection.cpp \
-    mail.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    smtp.cpp
 
 HEADERS += \
     beneficiaire.h \
     connection.h \
-    mail.h \
-    mainwindow.h
+    mainwindow.h \
+    smtp.h
 
 FORMS += \
     mainwindow.ui
