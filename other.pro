@@ -1,5 +1,15 @@
 QT += sql
 QT += charts
+QT       += core gui
+QT       += core gui sql
+QT       += network
+QT       += core gui charts
+QT       += printsupport
+QT       += core gui multimedia multimediawidgets
+QT       +=svg
+QT       += core gui  serialport
+QT       += concurrent
+
 greaterThan(QT_MAJOR_VERSION, 4): QT    += widgets
 
 
@@ -16,14 +26,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     adherent.cpp \
+    authenticator.cpp \
     connection.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    qrcode.cpp
 
 HEADERS += \
     adherent.h \
+    authenticator.h \
     connection.h \
-    mainwindow.h
+    mainwindow.h \
+    qrcode.h
 
 FORMS += \
     mainwindow.ui
@@ -32,3 +46,4 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+QT += quick

@@ -174,3 +174,42 @@ int Adherent::RE()
 
 
  }
+ QString Adherent::authen_nom(QString nom_adh)
+{
+QSqlQuery query;
+query.prepare("SELECT nom_adh FROM adherent WHERE nom_adh= :nom_adh");
+query.bindValue(":nom_adh",nom_adh);
+query.exec();
+query.next();
+    QString m_username = query.value(0).toString();
+
+return m_username;
+}
+QString  Adherent::authen_mdp(QString nom_adh)
+{
+    QSqlQuery query;
+    query.prepare("SELECT mdp_adh FROM adherent WHERE nom_adh= :nom_adh");
+    query.bindValue(":nom_adh",nom_adh);
+    query.exec();
+    query.next();
+        QString m_password = query.value(0).toString();
+
+    return m_password ;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

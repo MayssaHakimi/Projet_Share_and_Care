@@ -36,6 +36,22 @@ private slots:
 
     void on_pushButton_13_clicked();
 
+    void on_pushButton_clicked();
+
+    void on_pushButton_9_clicked();
+
+    void on_pushButton_10_clicked();
+    void getNomPrenomFromComboBox();
+
+
+    void on_pushButton_7_clicked();
+
+    void on_pushButton_17_clicked();
+
+
+
+    void on_pushButton_16_clicked();
+
 private:
     Ui::MainWindow *ui;
     Adherent Adh;

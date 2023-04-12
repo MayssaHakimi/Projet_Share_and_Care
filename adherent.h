@@ -61,6 +61,8 @@ int RRB();
 int DCF();
 int RL();
 int RE();
+QString  authen_nom(QString ) ;
+QString  authen_mdp(QString ) ;
 };
 
 #endif // ADHERENT_H
