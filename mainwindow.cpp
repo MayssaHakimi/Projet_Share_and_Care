@@ -20,11 +20,24 @@
 using namespace qrcodegen ;
 QT_CHARTS_USE_NAMESPACE
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //partie arduino
+       int ret=Ar.connect_arduino(); // lancer la connexion à arduino
+       switch(ret){
+       case(0):qDebug()<< "arduino is available and connected to : "<< Ar.getarduino_port_name();
+           break;
+       case(1):qDebug() << "arduino is available but not connected to :" <<Ar.getarduino_port_name();
+          break;
+       case(-1):qDebug() << "arduino is not available";
+       }
+
+
+
     //controle de saisir pour id
     ui->lineEdit_4->setValidator(new QIntValidator(1,99999999,this));
     //controle de saisir pour nom
@@ -45,8 +58,9 @@ MainWindow::MainWindow(QWidget *parent)
     on_pushButton_15_clicked();
 
     ui->lineEdit_9->setEchoMode(QLineEdit::Password);
-
           ui->lineEdit_9->show();
+          ui->lineEdit_2->setEchoMode(QLineEdit::Password);
+                ui->lineEdit_2->show();
     //pour recupérer id
     QSqlQuery query;
     query.exec("select id_adh from adherent");
@@ -119,8 +133,7 @@ QGridLayout *mainLayout = new QGridLayout(ui->frame);
 
 chartView->show();
  //![3]
-
-
+//partie arduino
 
 }
 
@@ -380,26 +393,26 @@ doc.print(&printer);
 void MainWindow::on_pushButton_clicked()
 {
     Authenticator auth;
-    QString username = ui->lineEdit->text();
+
     QString password = ui->lineEdit_2->text();
     QString ident = ui->lineEdit_3->text();
 
- auth.m_username=Adh.authen_nom(username);
- auth.m_password=Adh.authen_mdp(username);
+ auth.m_username=Adh.authen_nom(password);
+ auth.m_password=Adh.authen_mdp(password);
         // Vérification de l'authentification
 
-if (username == auth.m_username && password == auth.m_password ) {
+if (ident == auth.m_username && password == auth.m_password ) {
     QMessageBox::information(this, "Authentification réussie", "Vous êtes connecté.");
-    if (ident == "200ADH1403")
-     {ui->stackedWidget->setCurrentIndex(2);}
-   else  if (ident == "214BEN1101")
-     {ui->stackedWidget->setCurrentIndex(3);}
-    else if (ident == "301DON1407")
+    if (ident == "ADH140")
      {ui->stackedWidget->setCurrentIndex(4);}
-    else if (ident == "312LIV1807")
+   else  if (ident == "BEN110")
      {ui->stackedWidget->setCurrentIndex(5);}
-    else if (ident == "232EVE0101")
+    else if (ident == "DON147")
      {ui->stackedWidget->setCurrentIndex(6);}
+    else if (ident == "LIV180")
+     {ui->stackedWidget->setCurrentIndex(7);}
+    else if (ident == "EVE010")
+     {ui->stackedWidget->setCurrentIndex(8);}
 
 
 } else {
@@ -535,15 +548,100 @@ void MainWindow::getNomPrenomFromComboBox()
 
 void MainWindow::on_pushButton_7_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(0);
+
+   ui->lineEdit_2->clear();
+    ui->lineEdit_3->clear();
+    ui->stackedWidget->setCurrentIndex(2);
 }
 
 void MainWindow::on_pushButton_17_clicked()
 {
+    ui->lineEdit_2->clear();
+     ui->lineEdit_3->clear();
     ui->stackedWidget->setCurrentIndex(0);
+}
+void MainWindow::on_pushButton_22_clicked()
+{
+    ui->lineEdit_2->clear();
+     ui->lineEdit_3->clear();
+    ui->stackedWidget->setCurrentIndex(0);
+}
+void MainWindow::on_pushButton_23_clicked()
+{
+    ui->lineEdit_2->clear();
+     ui->lineEdit_3->clear();
+    ui->stackedWidget->setCurrentIndex(0);
+}
+void MainWindow::on_pushButton_25_clicked()
+{
+    ui->lineEdit_2->clear();
+     ui->lineEdit_3->clear();
+    ui->stackedWidget->setCurrentIndex(0);
+}
+void MainWindow::on_pushButton_24_clicked()
+{
+    ui->lineEdit_2->clear();
+     ui->lineEdit_3->clear();
+    ui->stackedWidget->setCurrentIndex(0);
+}
+void MainWindow::on_pushButton_16_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(9);
+
+}
+void MainWindow::on_pushButton_19_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}
+void MainWindow::on_pushButton_20_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+
+}
+void MainWindow::on_pushButton_21_clicked()
+{
+
+    dat=Ar.read_from_arduino();
+    char firstcar=dat[0];
+     qDebug()<< "arduino is available and connected to : "<< dat;
+
+   if(firstcar=='1')
+   {
+
+       ui->stackedWidget->setCurrentIndex(4);
+   }
+   if(firstcar=='2')
+   {
+
+       ui->stackedWidget->setCurrentIndex(5);
+   }
+   if(firstcar=='3')
+   {
+
+       ui->stackedWidget->setCurrentIndex(6);
+   }
+   if(firstcar=='4')
+   {
+
+       ui->stackedWidget->setCurrentIndex(7);
+   }
+   if(firstcar=='5')
+   {
+
+       ui->stackedWidget->setCurrentIndex(8);
+   }
+
+
+
+
 }
 
 
-void MainWindow::on_pushButton_16_clicked()
-{
-ui->stackedWidget->setCurrentIndex(7);}
+
+
+
+
+
+
+
+

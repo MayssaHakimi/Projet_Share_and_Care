@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 #include <adherent.h>
 #include <QMainWindow>
-
+#include"arduino.h"
 //QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -48,12 +48,27 @@ private slots:
 
     void on_pushButton_17_clicked();
 
-
-
     void on_pushButton_16_clicked();
+
+    void on_pushButton_19_clicked();
+
+    void on_pushButton_20_clicked();
+
+    void on_pushButton_21_clicked();
+
+    void on_pushButton_22_clicked();
+
+    void on_pushButton_23_clicked();
+
+    void on_pushButton_24_clicked();
+
+    void on_pushButton_25_clicked();
 
 private:
     Ui::MainWindow *ui;
     Adherent Adh;
+    QByteArray dat; // variable contenant les données reçues
+
+     Arduino Ar; // objet temporaire
 };
 #endif // MAINWINDOW_H

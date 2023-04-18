@@ -7,9 +7,8 @@ QT       += core gui charts
 QT       += printsupport
 QT       += core gui multimedia multimediawidgets
 QT       +=svg
-QT       += core gui  serialport
 QT       += concurrent
-
+QT       += serialport
 greaterThan(QT_MAJOR_VERSION, 4): QT    += widgets
 
 
@@ -26,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     adherent.cpp \
+    arduino.cpp \
     authenticator.cpp \
     connection.cpp \
     main.cpp \
@@ -34,6 +34,7 @@ SOURCES += \
 
 HEADERS += \
     adherent.h \
+    arduino.h \
     authenticator.h \
     connection.h \
     mainwindow.h \
