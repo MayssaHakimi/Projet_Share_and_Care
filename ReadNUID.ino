@@ -98,7 +98,6 @@ void loop() {
    {
    a=1;
    Serial.println(a);
-   /*while ((Serial.peek() == '\r' || Serial.peek() == '\n')) {*/
    dat=Serial.read();
    
     }
