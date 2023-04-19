@@ -62,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     //////////////////////////////////////////////
+     ui->lineEdit_8->setPlaceholderText("Nom du donateur / Type de don");
     ui->lineEdit_2->setValidator(new QIntValidator(0,999999999,this));
     ui->tab_affiche_2->setModel(Do.afficher_don());
      on_pushButton_22_clicked();
@@ -130,7 +131,7 @@ connect(ui->lineEdit_6, SIGNAL(returnPressed()), this, SLOT(returnPressed()));
 connect(&client, SIGNAL(newMessage(QString,QString)),
         this, SLOT(appendMessage(QString,QString)));
 connect(&client, SIGNAL(newParticipant(QString)),
-        this, SLOT(newParticipant(QString)));
+       this, SLOT(newParticipant(QString)));
 connect(&client, SIGNAL(participantLeft(QString)),
         this, SLOT(participantLeft(QString)));
 
@@ -192,7 +193,7 @@ void MainWindow::newParticipant(const QString &nick)
 
     QColor color = ui->textEdit_2->textColor();
     ui->textEdit_2->setTextColor(Qt::gray);
-    ui->textEdit_2->append(tr("* %1 has joined").arg(nick));
+    ui->textEdit_2->append(tr("* %1 a rejoint").arg(nick));
     ui->textEdit_2->setTextColor(color);
     ui->listWidget->addItem(nick);
 }
@@ -210,7 +211,7 @@ void MainWindow::participantLeft(const QString &nick)
     delete items.at(0);
     QColor color = ui->textEdit_2->textColor();
     ui->textEdit_2->setTextColor(Qt::gray);
-    ui->textEdit_2->append(tr("* %1 has left").arg(nick));
+    ui->textEdit_2->append(tr("* %1 est parti").arg(nick));
     ui->textEdit_2->setTextColor(color);
 }
 
@@ -218,9 +219,9 @@ void MainWindow::showInformation()
 {
     if (ui->listWidget->count() == 1) {
         QMessageBox::information(this, tr("Chat"),
-                                 tr("Launch several instances of this "
-                                    "program on your local network and "
-                                    "start chatting!"));
+                                 tr("Lancez plusieurs instances de ce "
+                                    " programme sur votre réseau local et "
+                                    "Commencez à discuter !"));
     }
 }
 
@@ -246,14 +247,16 @@ void MainWindow::send_sms()
     QUrlQuery params;
     params.addQueryItem("From", "+15732843399"); // votre numéro Twilio
     params.addQueryItem("MessagingServiceSid", "MG7d2ddea98fe438f60aa5bbe1ac6bbb1d");
-
+int id_don=ui->comboBox_3->currentText().toInt();
+QString type_don=ui->comboBox->currentText();
+QString message = QString("Un don d'id %1 de type %2 a été supprimé").arg(id_don).arg(type_don);
     params.addQueryItem("To", "+21697336009"); // le numéro de téléphone du destinataire
-    params.addQueryItem("Body", "Un don a été supprimé !");
+    params.addQueryItem("Body", message);
 
     url.setQuery(params);
     QByteArray data = url.toEncoded(QUrl::RemoveFragment);
 
-    request.setRawHeader("Authorization", "Basic " + QByteArray(QString("%1:%2").arg("AC6b2316ab038b93972d30b2342f18eff1").arg("0ee64390dcf947717c204aa570d0c40b").toUtf8()).toBase64());
+    request.setRawHeader("Authorization", "Basic " + QByteArray(QString("%1:%2").arg("AC6b2316ab038b93972d30b2342f18eff1").arg("b2746dcde21d24aefc3ecbcd6cd2fd4c").toUtf8()).toBase64());
     QNetworkReply *reply = manager->post(request, data);
 
     if (reply->error() != QNetworkReply::NoError) {
@@ -625,15 +628,21 @@ statistique_don();
 // arduino
 //vetement
 void MainWindow::on_pushButton_9_clicked()
-{int vet = Do.getVetement();
+{int vet = Do.vetement();
+
     if (vet==0)
-     {Adon.write_to_arduino("0");}
-    else Adon.write_to_arduino("1");
+     {Adon.write_to_arduino("0");
+       // Adon.write_to_arduino("00");
+
+    }
+    else {Adon.write_to_arduino("1");
+       // Adon.write_to_arduino("11");
+    }
 }
 //nourriture
 void MainWindow::on_pushButton_11_clicked()
 {
-    int nourr = Do.getNourriture();
+    int nourr = Do.nourriture();
 
         if (nourr==0)
          {Adon.write_to_arduino("2");}
