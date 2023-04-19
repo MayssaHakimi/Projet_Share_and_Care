@@ -4,6 +4,7 @@ QT += network
 QT += widgets charts
 QT += printsupport
 QT += charts
+QT += serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,6 +23,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    arduino.cpp \
     beneficiaire.cpp \
     connection.cpp \
     main.cpp \
@@ -29,6 +31,7 @@ SOURCES += \
     smtp.cpp
 
 HEADERS += \
+    arduino.h \
     beneficiaire.h \
     connection.h \
     mainwindow.h \

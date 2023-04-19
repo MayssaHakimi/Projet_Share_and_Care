@@ -255,7 +255,7 @@ QTabWidget::tab-bar {
 </string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -433,7 +433,7 @@ border-radius:30px;}</string>
          <rect>
           <x>50</x>
           <y>60</y>
-          <width>56</width>
+          <width>41</width>
           <height>16</height>
          </rect>
         </property>
@@ -1133,6 +1133,96 @@ border-radius:15px;
          <string>Contenu:</string>
         </property>
        </widget>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_6">
+      <attribute name="title">
+       <string>alarme</string>
+      </attribute>
+      <widget class="QLabel" name="label_pic_11">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>1021</width>
+         <height>541</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>131</width>
+         <height>91</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../SIGNALER.png</pixmap>
+       </property>
+      </widget>
+      <widget class="QGroupBox" name="bn_2">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>190</y>
+         <width>481</width>
+         <height>121</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>inserer votre mot de passe</string>
+       </property>
+       <widget class="QLineEdit" name="line_edit_mdp">
+        <property name="geometry">
+         <rect>
+          <x>200</x>
+          <y>50</y>
+          <width>201</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_4">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>50</y>
+          <width>131</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>mot de passe :</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QPushButton" name="alarmbutton">
+       <property name="geometry">
+        <rect>
+         <x>280</x>
+         <y>290</y>
+         <width>81</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#alarmbutton
+{
+background:rgb(157, 183, 95);
+color:white;
+border-radius:40px;
+}
+#alarmbutton:hover
+{
+background:rgb(100, 116, 60);
+color:white;
+border-radius:40px;
+}</string>
+       </property>
+       <property name="text">
+        <string>valider</string>
+       </property>
       </widget>
      </widget>
     </widget>

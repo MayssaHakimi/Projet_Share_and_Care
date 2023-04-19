@@ -130,7 +130,7 @@ bool Beneficiaire::modifier()
 QSqlQueryModel* Beneficiaire::tri()
 {
     QSqlQueryModel* model = new QSqlQueryModel();
-    model->setQuery("SELECT * FROM beneficiaire ORDER BY nom_ben ASC");
+    model->setQuery("SELECT * FROM beneficiaire ORDER BY age_ben ASC");
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("LIEU"));
     model->setHeaderData(2, Qt::Horizontal, QObject::tr("NOM"));
@@ -147,7 +147,7 @@ QSqlQueryModel* Beneficiaire::tri()
 QSqlQueryModel* Beneficiaire::tri2()
 {
     QSqlQueryModel* model = new QSqlQueryModel();
-    model->setQuery("SELECT * FROM beneficiaire ORDER BY nom_ben DESC");
+    model->setQuery("SELECT * FROM beneficiaire ORDER BY age_ben DESC");
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("LIEU"));
     model->setHeaderData(2, Qt::Horizontal, QObject::tr("NOM"));

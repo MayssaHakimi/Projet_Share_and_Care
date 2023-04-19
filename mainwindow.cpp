@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+ #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "beneficiaire.h"
 #include<QMessageBox>
@@ -25,11 +25,26 @@
 #include <QtCharts/QBarSeries>
 #include <QBarCategoryAxis>
 #include <QVBoxLayout>
+
+#include"arduino.h"
+
+
+
 MainWindow::MainWindow(QWidget *parent)
    : QMainWindow(parent)
    , ui(new Ui::MainWindow)
 {
    ui->setupUi(this);
+   int ret=A.connect_arduino();
+   switch(ret){
+   case(0):qDebug()<< "arduino is available and connected to : "<< A.getArduino_port_name();
+       break;
+   case(1):qDebug()<< "arduino is available but not connected to :"<<A.getArduino_port_name();
+       break;
+   case(-1):qDebug()<< "arduino is not available";
+
+   }
+    QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label()));
      ui->lineEdit_id->setValidator(new QIntValidator(0, 99999999, this));
      ui->lineEdit_cin->setValidator(new QIntValidator(0, 99999999, this));
      ui->lineEdit_tel->setValidator(new QIntValidator(10000000, 99999999, this));
@@ -461,3 +476,32 @@ void MainWindow::on_aff_clicked()
 
 }
 
+
+void MainWindow::on_alarmbutton_clicked()
+{
+    QSqlQuery query;
+    int id_ben=ui->line_edit_mdp->text().toInt();
+       query.prepare("SELECT * FROM beneficiaire WHERE id_ben = :id_ben");
+       query.bindValue(":id_ben", id_ben);
+       if (!query.exec())
+       {
+           qWarning() << "Failed to execute query.";
+
+       }
+
+       // Check if the query returned any rows
+       if (query.next())
+       {
+           // Password exists in the database
+           QMessageBox::information(nullptr,QObject::tr("OK"),
+                                    QObject::tr("mot de passe valide"));
+           A.write_to_arduino("1");
+       }
+       else
+       {
+           // Password does not exist in the database
+           QMessageBox::information(nullptr,QObject::tr("OK"),
+                                    QObject::tr("mot de passe invalide"));
+           A.write_to_arduino("0   ");;
+       }
+}

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QPropertyAnimation>
 #include <beneficiaire.h>
+#include <arduino.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -51,10 +52,13 @@ private slots:
 
     void on_pushButton_tri_2_clicked();
 
+    void on_alarmbutton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Beneficiaire B;
     Beneficiaire Btmp;
     Beneficiaire Bo;
+    Arduino A;
 };
 #endif // MAINWINDOW_H
