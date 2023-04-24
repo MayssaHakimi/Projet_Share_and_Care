@@ -23,6 +23,7 @@
 #include <QDateTime>
 #include <QTimer>
 #include <QtCharts>
+#include <QSqlError>
 class Event
 {
 private:
@@ -44,6 +45,7 @@ public:
    QSqlQueryModel * rechercher(QString);
     QSqlQueryModel* trie(int a);
     QChart * statistique_chart();
+    QString notif();
   /*  void SetReminder(const wchar_t, int );*/
 };
 

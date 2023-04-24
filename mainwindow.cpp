@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "event.h"
+
 #include <QTextDocument>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -13,17 +14,58 @@ MainWindow::MainWindow(QWidget *parent)
 
                     chart=ev.statistique_chart();
 
-                   QChartView *chartview = new QChartView(chart,ui->stats);
+                   QChartView *chartview = new QChartView(chart,ui->frame_3);
 
-                   chartview->resize(500,250);
+                   //chartview->resize(500,250);
 
                    chartview->setRenderHint(QPainter::Antialiasing);
+
+
+
+
+
+                   QGridLayout *mainLayout = new QGridLayout(ui->frame_3);
+
+                   mainLayout->addWidget(chartview, 1, 1);
+
+                  //  ui->frame->setLayout(mainLayout);
+                  chartview->setMinimumSize(500,250);
+                  chartview->resize(500,250);
+                  chartview->setParent(ui->frame_3);
+
+ chartview->show();
+
+
+                   QString notif = ev.notif();
+                   if (notif == "")
+                   {
+                       ui->notif->hide();
+                       ui->xx->hide();
+                   }else
+                       ui->notif->setText("event is :"+notif);
+
+                   int ret=Ard.connect_arduino();
+                       switch(ret){
+                       case(0):qDebug()<<"arduino is available and connected to: "<< Ard.getarduino_port_name();
+                       break;
+                       case(1):qDebug()<<"arduino is available but not connected to "<< Ard.getarduino_port_name();
+                       break;
+                       case(-1):qDebug()<<"arduino is not available ";
+                       }
+                       QObject::connect(Ard.getserial(),SIGNAL(readyRead()),this,SLOT(detect()));
 }
 
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+void MainWindow::detect(){
+    data1=Ard.read_from_arduino();
+    if (data1=="2"){
+        QMessageBox::information(nullptr, QObject::tr("Mouvement"),
+                                 QObject::tr("quelq'un passe par cette zone."), QMessageBox::Ok);
+    }
 }
 void MainWindow::on_ajouter_clicked()
 {
@@ -70,7 +112,7 @@ void MainWindow::on_modifier_2_clicked()
     QString nbp= QString::number(np);
     Event e(id, nom_eve,nom_eq,nom_org,np,date_eve,tache);
    QSqlQuery q;
-   q.prepare("UPDATE EVENEMENT SET id_eve = '"+cin+"' , nom_eve = '"+nom_eve+"' , nom_equipe = '"+nom_eq+"' , nom_organisateur = '"+nom_org+"' , nbre_participent ='"+nbp+"' , date_eve = '"+date_e+"' , tache_eve ='"+tache+"' where ID_EVE = '"+cin+"' ");
+   q.prepare("UPDATE EVENEMENT set id_eve = '"+cin+"' , nom_eve = '"+nom_eve+"' , nom_equipe = '"+nom_eq+"' , nom_organisateur = '"+nom_org+"' , nbre_participent ='"+nbp+"' , date_eve = '"+date_e+"' , tache_eve ='"+tache+"' where id_eve = '"+cin+"' ");
  if (q.exec())
  {
      ui->tableView_2->setModel(ev.afficher());
@@ -193,4 +235,74 @@ void MainWindow::on_savetopdf_clicked()
             }
 
             d.print(&printer);
+}
+
+void MainWindow::on_calendarWidget_clicked(const QDate &date)
+{
+    QString dateString = date.toString();
+
+     QString query = QString("SELECT DO FROM TO_DO WHERE DATE_TO_DO = %1").arg(dateString);
+       QSqlQuery sqlQuery;  sqlQuery.prepare(query);
+        if (sqlQuery.exec()) {
+            if (sqlQuery.next()) {
+              ui->TO_DO->setText( sqlQuery.value(0).toString());
+            }else
+                ui->TO_DO->setText("");
+        } else {
+            qDebug() << "Error executing SQL query: " << sqlQuery.lastError().text();
+        }
+
+        qDebug() << "Selected Date: " << dateString;
+}
+
+void MainWindow::on_save_clicked()
+{
+    QString TODO = ui->TO_DO->toPlainText();
+        QDate selectedDate = ui->calendarWidget->selectedDate();
+        QString dateString = selectedDate.toString();
+
+        QSqlQuery query;
+
+        query.prepare("INSERT INTO TO_DO (DO,DATE_TO_DO) "
+                      "VALUES (:text, :date )");
+
+        query.bindValue(":text",TODO);
+        query.bindValue(":date", dateString);
+
+
+        query.exec();
+}
+
+void MainWindow::on_xx_clicked()
+{
+    ui->xx->hide();
+    ui->notif->hide();
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    QChart *chart = new QChart();
+
+                 chart=ev.statistique_chart();
+
+                QChartView *chartview = new QChartView(chart,ui->frame_3);
+
+                //chartview->resize(500,250);
+
+                chartview->setRenderHint(QPainter::Antialiasing);
+
+
+
+
+
+                QGridLayout *mainLayout = new QGridLayout(ui->frame_3);
+
+                mainLayout->addWidget(chartview, 1, 1);
+
+               //  ui->frame->setLayout(mainLayout);
+               chartview->setMinimumSize(671,251);
+               chartview->resize(671,251);
+               chartview->setParent(ui->frame_3);
+
+chartview->show();
 }

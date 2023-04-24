@@ -111,10 +111,10 @@ QChart *Event::statistique_chart()
         query0.prepare("SELECT * FROM EVENEMENT");
         query0.exec();
 
-        query1.prepare("SELECT * FROM EVENEMENT WHERE nom_organisateur='jack'");
+        query1.prepare("SELECT * FROM EVENEMENT WHERE nom_organisateur='imen'");
         query1.exec();
 
-        query2.prepare("SELECT * FROM EVENEMENT WHERE nom_organisateur='romeo'");
+        query2.prepare("SELECT * FROM EVENEMENT WHERE nom_organisateur='rami'");
         query2.exec();
 
         query3.prepare("SELECT * FROM EVENEMENT WHERE nom_organisateur='sami'");
@@ -134,10 +134,10 @@ QChart *Event::statistique_chart()
 
         //totale=totale/2;
 
-        QBarSet *set0 = new QBarSet("nom_organisateur:jack");
-        QBarSet *set1 = new QBarSet("nom_organisateur:romeo");
-        QBarSet *set2 = new QBarSet("nom_organisateur:sami");
-        QBarSet *set3 = new QBarSet("nom_organisateur:samir");
+        QBarSet *set0 = new QBarSet("imen");
+        QBarSet *set1 = new QBarSet("rami");
+        QBarSet *set2 = new QBarSet("sami");
+        QBarSet *set3 = new QBarSet("samir");
 
         *set0 << c1_1;
         *set1 << c1_2;
@@ -154,11 +154,11 @@ QChart *Event::statistique_chart()
         chart->addSeries(series);
         chart->setTitle("Statistique des organisateurs par rapport aux evenements");
         chart->setAnimationOptions(QChart::SeriesAnimations);
-        chart->setTheme(QChart::ChartThemeBlueCerulean);
+        chart->setTheme(QChart::ChartThemeBrownSand);//changer couleur
 
-        QStringList nom_organisateur = {"jack", "romeo", "sami", "samir"};
+        //QStringList nom_organisateur = {"imen", "rami", "sami", "samir"};
         QBarCategoryAxis *axisX = new QBarCategoryAxis();
-        axisX->append(nom_organisateur);
+        //axisX->append(nom_organisateur);
         chart->addAxis(axisX, Qt::AlignBottom);
         series->attachAxis(axisX);
 
@@ -199,30 +199,21 @@ void setReminder(const QString &reminderText, const QDateTime &reminderDateTime)
       timer->start();
   }
 
-                                //fonction pdf
- QString fileName = Event::getSaveFileName((QWidget* )0, "Export PDF", QString(), "*.pdf");
-         if (QFileInfo(fileName).suffix().isEmpty()) { fileName.append(".pdf"); }
-                QPrinter printer(QPrinter::PrinterResolution);
-                               //fonction pdf 2
-void Event::saveToPdf(const QString& filename, const QString& text)
-{
-    // create text file
-    QFile file(filename);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QMessageBox::warning(this, "Error", "Could not create file.");
-        return;
-    }
-    QTextStream out(&file);
-    out << text;
-    file.close();
-
-    // create PDF file
-    QPrinter printer(QPrinter::PrinterResolution);
-    printer.setOutputFormat(QPrinter::PdfFormat);
-    printer.setOutputFileName(filename + ".pdf");
-    QTextDocument doc;
-    doc.setHtml(text);
-    doc.print(&printer);
-}
-
 */
+QString Event::notif()
+{
+    QString notif = "";
+    QDate b = QDate::currentDate();
+    QString datestring = b.toString();
+    QString query = QString("SELECT nom_eve FROM EVENNEMENT WHERE date_eve = %1").arg(datestring);
+       QSqlQuery sqlQuery;
+       sqlQuery.prepare(query);
+        if (sqlQuery.exec()) {
+            if (sqlQuery.next()) {
+           notif = sqlQuery.value(0).toString();
+            }
+        } else {
+            qDebug() << "Error executing SQL query: " << sqlQuery.lastError().text();
+        }
+        return notif;
+}

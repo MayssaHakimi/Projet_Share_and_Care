@@ -61,8 +61,19 @@ private slots:
 
     void on_savetopdf_clicked();
 
+    void on_calendarWidget_clicked(const QDate &date);
+
+    void on_save_clicked();
+
+    void on_xx_clicked();
+
+    void on_pushButton_clicked();
+
+    void detect();
+
 private:
     Ui::MainWindow *ui;
     Event ev;
+    arduino Ard;
 };
 #endif // MAINWINDOW_H
