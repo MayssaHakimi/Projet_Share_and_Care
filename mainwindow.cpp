@@ -1,4 +1,4 @@
- #include "mainwindow.h"
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "beneficiaire.h"
 #include<QMessageBox>
@@ -35,16 +35,18 @@ MainWindow::MainWindow(QWidget *parent)
    , ui(new Ui::MainWindow)
 {
    ui->setupUi(this);
-   int ret=A.connect_arduino();
-   switch(ret){
-   case(0):qDebug()<< "arduino is available and connected to : "<< A.getArduino_port_name();
-       break;
-   case(1):qDebug()<< "arduino is available but not connected to :"<<A.getArduino_port_name();
-       break;
-   case(-1):qDebug()<< "arduino is not available";
+   //arduino
+       int ret=Aben.connect_arduino(); // lancer la connexion à arduino
+       switch(ret){
+       case(0):qDebug()<< "arduino is available and connected to : "<< Aben.getarduino_port_name();
+           break;
+       case(1):qDebug() << "arduino is available but not connected to :" <<Aben.getarduino_port_name();
+          break;
+       case(-1):qDebug() << "arduino is not available";
+       }
+        QObject::connect(Aben.getserial(),SIGNAL(readyRead()),this,SLOT(update_label())); // permet de lancer
+        //le slot update_label suite à la reception du signal readyRead (reception des données).
 
-   }
-    QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label()));
      ui->lineEdit_id->setValidator(new QIntValidator(0, 99999999, this));
      ui->lineEdit_cin->setValidator(new QIntValidator(0, 99999999, this));
      ui->lineEdit_tel->setValidator(new QIntValidator(10000000, 99999999, this));
@@ -323,7 +325,7 @@ void MainWindow::on_mailbutt_clicked()
     Smtp* smtp = new Smtp("lefi.amine@esprit.tn", "popamqoxierydzbe", "smtp.gmail.com", 465 , 1500000);
         connect(smtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
 
-            smtp->sendMail( ui->mail->text() ,"lefi.amine@esprit.tn", ui->subject->text(),ui->msg->toPlainText());
+            smtp->sendMail("lefi.amine@esprit.tn", ui->mail->text() , ui->subject->text(),ui->msg->toPlainText());
             QMessageBox::information(nullptr,QObject::tr("OK"),
                                      QObject::tr("Mail envoyé"));
 }
@@ -495,13 +497,15 @@ void MainWindow::on_alarmbutton_clicked()
            // Password exists in the database
            QMessageBox::information(nullptr,QObject::tr("OK"),
                                     QObject::tr("mot de passe valide"));
-           A.write_to_arduino("1");
+           Aben.write_to_arduino("1");
        }
        else
        {
            // Password does not exist in the database
            QMessageBox::information(nullptr,QObject::tr("OK"),
                                     QObject::tr("mot de passe invalide"));
-           A.write_to_arduino("0   ");;
+           Aben.write_to_arduino("0");
        }
 }
+
+

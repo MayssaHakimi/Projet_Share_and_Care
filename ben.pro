@@ -4,7 +4,9 @@ QT += network
 QT += widgets charts
 QT += printsupport
 QT += charts
-QT += serialport
+QT       += serialport
+QT       += core gui  serialport
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

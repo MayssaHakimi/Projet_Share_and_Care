@@ -10,3 +10,7 @@ Modification d'un beneficiaire  0  le  mer. avr. 12 2023  à l'heure   09:14:55
 Modification d'un beneficiaire  0  le  mer. avr. 12 2023  à l'heure   09:14:56
 --------------------------------------------------------------------------------------
 Modification d'un beneficiaire  0  le  mer. avr. 12 2023  à l'heure   09:14:58
+--------------------------------------------------------------------------------------
+Ajout d'un beneficiaire  555524  le  mer. avr. 19 2023  à l'heure   10:15:01
+Ajout d'un beneficiaire  446985  le  mer. avr. 19 2023  à l'heure   10:26:25 
+Ajout d'un beneficiaire  4469  le  mer. avr. 19 2023  à l'heure   10:26:34 

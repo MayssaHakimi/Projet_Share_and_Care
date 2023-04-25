@@ -54,11 +54,14 @@ private slots:
 
     void on_alarmbutton_clicked();
 
+    void on_pushButton_9_clicked();
+
 private:
     Ui::MainWindow *ui;
     Beneficiaire B;
     Beneficiaire Btmp;
     Beneficiaire Bo;
-    Arduino A;
+    Arduino Aben;
+    QByteArray data;
 };
 #endif // MAINWINDOW_H
