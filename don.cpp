@@ -48,7 +48,7 @@ bool Don::ajouter_don()
  {
      QSqlQueryModel * model=new QSqlQueryModel();
      model->setQuery("select id_don , nom_don , prenom_don, cin_don , type_don ,taille , date_v , quantite from DONS");
-     model->setHeaderData(0,Qt::Horizontal,QObject::tr("Identifiant"));
+     model->setHeaderData(0,Qt::Horizontal,QObject::tr("Id_du_don"));
      model->setHeaderData(1,Qt::Horizontal,QObject::tr("Nom du donateur"));
      model->setHeaderData(2,Qt::Horizontal,QObject::tr("Prénom du donateur"));
      model->setHeaderData(3,Qt::Horizontal,QObject::tr("Cin du donateur"));

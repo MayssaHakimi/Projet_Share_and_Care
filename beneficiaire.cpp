@@ -127,10 +127,10 @@ bool Beneficiaire::modifier()
     return query.exec();
 }
 
-QSqlQueryModel* Beneficiaire::tri2()
+QSqlQueryModel* Beneficiaire::tri()
 {
     QSqlQueryModel* model = new QSqlQueryModel();
-    model->setQuery("SELECT * FROM beneficiaire ORDER BY nom_ben ASC");
+    model->setQuery("SELECT * FROM beneficiaire ORDER BY age_ben ASC");
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("LIEU"));
     model->setHeaderData(2, Qt::Horizontal, QObject::tr("NOM"));
@@ -144,5 +144,20 @@ QSqlQueryModel* Beneficiaire::tri2()
     return model;
 }
 
+QSqlQueryModel* Beneficiaire::tri2()
+{
+    QSqlQueryModel* model = new QSqlQueryModel();
+    model->setQuery("SELECT * FROM beneficiaire ORDER BY age_ben DESC");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("LIEU"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("NOM"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("PRENOM"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("AGE"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("NB MF"));
+    model->setHeaderData(6, Qt::Horizontal, QObject::tr("TYPE DEMANDE"));
+    model->setHeaderData(7, Qt::Horizontal, QObject::tr("DATE AJOUT"));
+    model->setHeaderData(8, Qt::Horizontal, QObject::tr("TEL"));
 
+    return model;
+}
 

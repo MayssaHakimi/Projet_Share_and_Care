@@ -50,13 +50,11 @@ public:
     QSqlQueryModel * trieDesc();
     QSqlQueryModel * recherche_don(QString  ,QString);
     int calculer_type(QString type_don) ;
+
+
+
     int vetement( );
     int nourriture( );
-    int getVetement(){return  count ;}
-    int getNourriture(){return count ;}
-    void setVetement(int count){this->count=count;}
-    void setNourriture(int count){this->count=count;}
-
 
 
 };
